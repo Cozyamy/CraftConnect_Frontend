@@ -8,6 +8,7 @@ import {
   googleProvider,
 } from "../../firebase/Firebaseconfig.js";
 import { useAuth } from "../Authprovider/AuthContext";
+import axios from 'axios';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -53,26 +54,37 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validate form fields before submission
     const isFormValid = Object.values(formErrors).every((error) => !error);
     if (!isFormValid) {
       console.log("Please fill out all required fields correctly.");
       return;
     }
-
+  
     setIsLoading(true); // Enable loading state during submission
     setErrorMessage(""); // Clear any previous error messages
-
+  
     try {
       const { email, password } = formData;
+      // Create user
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/category"); // Redirect after successful signup
+  
+      // Wait for user to be available
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          // Get ID token
+          const token = await user.getIdToken();
+          console.log(token);
+          // Send token to server
+          const res = await axios.post('http://127.0.0.1:8000/api/v1/register', { token });
+          console.log(res.data);
+          navigate("/category"); // Redirect after successful signup
+        }
+      });
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        setErrorMessage(
-          "Email is already in use. Please use a different email."
-        );
+        setErrorMessage("Email is already in use. Please use a different email.");
         setTimeout(() => {
           setErrorMessage("");
         }, 3000);
@@ -83,6 +95,7 @@ const SignUp = () => {
       setIsLoading(false); // Disable loading state after submission
     }
   };
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

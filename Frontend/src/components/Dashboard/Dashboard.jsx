@@ -71,12 +71,13 @@ export default function DashboardLayout({ children }) {
         
         <div className="flex p-5 relative">
           <div className="w-full p-2 md:p-5">{children}</div>
-        </div>
-
-        <div className="px-16 py-2 w-full flex flex-col gap-4">
+          <div className="px-16 py-2 w-full flex flex-col gap-4">
           <DashTile/>
           <MainDash/>
           </div>
+        </div>
+
+        
       </main>
     </div>
   );

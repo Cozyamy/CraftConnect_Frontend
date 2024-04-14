@@ -9,8 +9,8 @@ const DashTile = () => {
     <>
       <div>
         <h1 className='text-[1.3rem] font-medium'>Dashboard</h1>
-        <div className='flex gap-6'>
-          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4'>
+        <div className='flex gap-6 sm-max:grid sm-max:grid-cols-2 sm-max:gap-4'>
+          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4 sm-max:w-[13rem]'>
             <div className='flex items-center justify-between'>
               <small>Wallet</small>
               <div className='bg-[#e5e4ff] w-[2rem] h-[2rem] rounded-full flex items-center justify-center'>
@@ -19,7 +19,7 @@ const DashTile = () => {
             </div>
             <h1 className='text-[1.3rem] font-semibold'>NGN 50, 985</h1>
           </div>
-          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4'>
+          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4  sm-max:w-[13rem]'>
             
             <div className='flex items-center justify-between'>
               <small>Wallet</small>
@@ -29,7 +29,7 @@ const DashTile = () => {
             </div>
             <h1 className='text-[1.3rem] font-semibold'>NGN 50, 985</h1>
           </div>
-          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4'>
+          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4  sm-max:w-[13rem]'>
             <div className='flex items-center justify-between'>
               <small>Completed</small>
               <div className='bg-[#d9f7e8] w-[2rem] h-[2rem] rounded-full flex items-center justify-center'>
@@ -38,7 +38,7 @@ const DashTile = () => {
             </div>
             <h1 className='text-[1.3rem] font-semibold'>985</h1>
           </div>
-          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4'>
+          <div className='bg-white w-[16rem] h-[7rem] rounded-md p-2 flex flex-col gap-4  sm-max:w-[13rem]'>
             <div className='flex items-center justify-between'>
               <small>pending</small>
               <div className='bg-[#ffded1] w-[2rem] h-[2rem] rounded-full flex items-center justify-center'>
