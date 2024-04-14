@@ -13,7 +13,7 @@ import {
 
 const Aside = ({ asideDisplay }) => {
   // State to track active button index
-  const [activeButtonIndex, setActiveButtonIndex] = useState(null);
+  const [activeButtonIndex, setActiveButtonIndex] = useState(0);
   const { logout } = useAuth(); // Accessing the logout function from AuthContext
   const navigate = useNavigate(); // Obtaining the navigate function
 

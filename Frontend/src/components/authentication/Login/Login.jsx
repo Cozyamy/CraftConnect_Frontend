@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/Firebaseconfig";
 import { useAuth } from "../Authprovider/AuthContext";
 import PasswordResetModal from "../PassReset/PasswdReset";
+import axios from 'axios'; // Import axios
 
 const Login = () => {
   const navigate = useNavigate();
@@ -56,6 +57,26 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       setLoginSuccess(true); // Set login success message to true
       navigate("/dashboard"); // Redirect after successful login
+
+      // Wait for user to be available
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          // Get ID token
+          const token = await user.getIdToken();
+          console.log(token);
+          // Send token to server
+          const res = await axios.post(
+            'https://53cc-105-113-33-231.ngrok-free.app/api/v1/login',
+            null,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          console.log(res.data); // Handle response
+        }
+      });
     } catch (error) {
       console.error("Error signing in:", error.message);
       setFormErrors({

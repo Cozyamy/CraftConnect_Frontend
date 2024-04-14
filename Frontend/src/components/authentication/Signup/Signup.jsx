@@ -5,6 +5,7 @@ import {
   auth,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  sendEmailVerification,
   googleProvider,
 } from "../../firebase/Firebaseconfig.js";
 import { useAuth } from "../Authprovider/AuthContext";
@@ -68,7 +69,7 @@ const SignUp = () => {
     try {
       const { email, password } = formData;
       // Create user
-      await createUserWithEmailAndPassword(auth, email, password);
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
   
       // Wait for user to be available
       auth.onAuthStateChanged(async (user) => {
@@ -76,10 +77,19 @@ const SignUp = () => {
           // Get ID token
           const token = await user.getIdToken();
           console.log(token);
+          await sendEmailVerification(credential.user);
           // Send token to server
-          const res = await axios.post('http://127.0.0.1:8000/api/v1/register', { token });
+          const res = await axios.post(
+            'https://53cc-105-113-33-231.ngrok-free.app/api/v1/register',
+            null,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
           console.log(res.data);
-          navigate("/category"); // Redirect after successful signup
+          navigate("/dashboard"); // Redirect after successful signup
         }
       });
     } catch (error) {

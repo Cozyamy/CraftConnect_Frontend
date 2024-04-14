@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }) {
           className={`p-5 sticky z-10 top-0 w-full bg-[#E2EDF2] border-b-2 shadow-sm border-[#E6E6E6] bg-[url('../../../../src/assets/images/dashboard/bg_ellipse1.png ')] bg-no-repeat bg-[top_right]`}
         >
           <div className="h-14 w-full flex justify-end items-center gap-5">
-            <div className="w-full">Welcome Austin Catherine</div>
+            <div className="w-full text-2xl">Welcome Austin Catherine</div>
 
             <div
               className="relative md:hidden w-5 h-[20px] flex flex-col items-center justify-between cursor-pointer mr-[1.5rem]"
@@ -68,16 +68,20 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
         </header>
-        
+
         <div className="flex p-5 relative">
-          <div className="w-full p-2 md:p-5">{children}</div>
-          <div className="px-16 py-2 w-full flex flex-col gap-4">
-          <DashTile/>
-          <MainDash/>
+          <div className="w-full p-2 md:p-1">{children}</div>
+          <div className="px-10 py-2 w-full">
+
+            <div className=" flex flex-col gap-4">
+              <DashTile />
+              <MainDash />
+            </div>
+
+            
+
           </div>
         </div>
-
-        
       </main>
     </div>
   );
