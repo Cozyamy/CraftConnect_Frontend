@@ -89,7 +89,7 @@ const SignUp = () => {
             }
           );
           console.log(res.data);
-          navigate("/dashboard"); // Redirect after successful signup
+          navigate("/category"); // Redirect after successful signup
         }
       });
     } catch (error) {

@@ -11,7 +11,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
 
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  console.log('Users:', user)
+  console.log("Users:", user);
 
   const handleLogout = () => {
     logout()
@@ -102,19 +102,31 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
             </ul>
           )}
 
-          {user && showLogoutButton && (
-            <button
-              onClick={() => setShowLogoutConfirmation(true)}
-              className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
-            >
-              {user.displayName ? user.displayName.substring(0, 2) : "Logout"}
-            </button>
-          )}
+          <div className="flex gap-2">
+            {showLogoutButton && (
+              <button
+                onClick={function () {
+                  navigate("/dashboard")
+                }}
+                className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
+              >
+                Dashboard
+              </button>
+            )}
+            {user && showLogoutButton && (
+              <button
+                onClick={() => setShowLogoutConfirmation(true)}
+                className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
+              >
+                {user.displayName ? user.displayName.substring(0, 2) : "Logout"}
+              </button>
+            )}
+          </div>
 
           <>
             {showLinks && (
               <div className="flex gap-2 sm-max:hidden">
-                {!user &&  (
+                {!user && (
                   <div className="sign flex gap-2">
                     <CtaBtn text="Sign Up" to="/signup" />
                     <CtaBtn text="Login" to="/login" />
