@@ -126,7 +126,8 @@ const SignUp = () => {
       formData.first_name.trim() !== "" &&
       formData.last_name.trim() !== "" &&
       validateEmail(formData.email) &&
-      formData.phone_number.trim() !== "" &&
+      formData.phone_number.trim().startsWith("+234")&&
+      formData.phone_number.trim().length <= 14 &&
       formData.password.length >= 6 &&
       Object.values(formErrors).every((error) => !error)
     );
