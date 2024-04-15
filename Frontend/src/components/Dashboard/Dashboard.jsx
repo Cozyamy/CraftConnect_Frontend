@@ -19,11 +19,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-x-auto">
+    <div className="flex h-screen">
       <Aside onPageChange={handlePageChange} visible={asideVisible} />
       <div className="flex flex-col w-full">
         <Header toggleAside={toggleAside} className="sticky" />
-        <div className="p-4 bg-[#e2edf2] h-screen">
+        <div className="p-4 bg-[#e2edf2] h-screen overflow-x-hidden">
           {currentPage === "Page1" && <DashPage1 />}
           {currentPage === "Page2" && <DashPage2 />}
           {currentPage === "Page5" && <DashPage5 />}

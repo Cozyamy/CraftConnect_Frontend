@@ -1,4 +1,3 @@
-// AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../../firebase/Firebaseconfig'; // Adjust the path as needed
 import { signOut } from 'firebase/auth';

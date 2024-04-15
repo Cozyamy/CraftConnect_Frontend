@@ -16,21 +16,25 @@ const SignUp = () => {
   const { user } = useAuth();
 
   const [formData, setFormData] = useState({
-    fullname: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    phone: "",
-    password: "",
+    phone_number: "",
+    password: "", // Initialize with an empty string
   });
+  
 
   const [formErrors, setFormErrors] = useState({
-    fullname: false,
+    first_name: false,
+    last_name: false,
     email: false,
-    phone: false,
+    phone_number: false,
     password: false,
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
@@ -67,7 +71,7 @@ const SignUp = () => {
     setErrorMessage(""); // Clear any previous error messages
   
     try {
-      const { email, password } = formData;
+      const { email, password, first_name, last_name, phone_number} = formData;
       // Create user
       const credential = await createUserWithEmailAndPassword(auth, email, password);
   
@@ -80,16 +84,21 @@ const SignUp = () => {
           await sendEmailVerification(credential.user);
           // Send token to server
           const res = await axios.post(
-            'https://53cc-105-113-33-231.ngrok-free.app/api/v1/register',
-            null,
+            'https://8a94-102-90-66-216.ngrok-free.app/api/v1/register',
+            {
+              first_name: first_name,
+              last_name: last_name,
+              phone_number: phone_number
+            },
             {
               headers: {
                 Authorization: `Bearer ${token}`
               }
             }
           );
+          
           console.log(res.data);
-          navigate("/category"); // Redirect after successful signup
+          navigate("/login"); // Redirect to the login page after successful signup
         }
       });
     } catch (error) {
@@ -106,6 +115,7 @@ const SignUp = () => {
     }
   };
   
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -113,17 +123,18 @@ const SignUp = () => {
 
   const isReadyForSubmission = () => {
     return (
-      formData.fullname.trim() !== "" &&
+      formData.first_name.trim() !== "" &&
+      formData.last_name.trim() !== "" &&
       validateEmail(formData.email) &&
-      formData.phone.trim() !== "" &&
+      formData.phone_number.trim() !== "" &&
       formData.password.length >= 6 &&
       Object.values(formErrors).every((error) => !error)
     );
   };
 
   const handleGoogleSignUp = async () => {
-    setIsLoading(true); // Enable loading state during Google sign-in
-
+    setIsGoogleLoading(true); // Enable loading state during Google sign-in
+  
     try {
       await signInWithPopup(auth, googleProvider);
       navigate("/category");
@@ -134,7 +145,7 @@ const SignUp = () => {
         console.log("Error signing up with Google:", error.message);
       }
     } finally {
-      setIsLoading(false);
+      setIsGoogleLoading(false);
     }
   };
 
@@ -154,26 +165,49 @@ const SignUp = () => {
           onSubmit={handleSubmit}
         >
           {/* Full Name */}
-          <div className="mb-4">
+          <div className="mb-4 flex gap-3 ">
+            <div>
             <label
-              htmlFor="fullname"
+              htmlFor="first_name"
               className="block text-gray-600 font-[400] mb-2"
             >
-              Full Name
+              First Name
             </label>
             <input
               type="text"
-              id="fullname"
-              name="fullname"
-              placeholder="Enter your full name"
+              id="first_name"
+              name="first_name"
+              placeholder="Enter your first name"
               className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
-                formErrors.fullname
+                formErrors.first_name
                   ? "border-red-500"
                   : "border-gray-300 focus:border-blue-500"
               }`}
-              value={formData.fullname}
+              value={formData.first_name}
               onChange={handleInputChange}
             />
+            </div>
+            <div>
+            <label
+              htmlFor="last_name"
+              className="block text-gray-600 font-[400] mb-2"
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              placeholder="Enter your last name"
+              className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
+                formErrors.last_name
+                  ? "border-red-500"
+                  : "border-gray-300 focus:border-blue-500"
+              }`}
+              value={formData.last_name}
+              onChange={handleInputChange}
+            />
+            </div>
           </div>
 
           {/* Email Address */}
@@ -209,22 +243,22 @@ const SignUp = () => {
           {/* Phone Number */}
           <div className="mb-4">
             <label
-              htmlFor="phone"
+              htmlFor="phone_number"
               className="block text-gray-600 font-[400] mb-2"
             >
               Phone Number
             </label>
             <input
               type="tel"
-              id="phone"
-              name="phone"
-              placeholder="Enter your phone number"
+              id="phone_number"
+              name="phone_number"
+              placeholder="+2348045678961"
               className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
-                formErrors.phone
+                formErrors.phone_number
                   ? "border-red-500"
                   : "border-gray-300 focus:border-blue-500"
               }`}
-              value={formData.phone}
+              value={formData.phone_number}
               onChange={handleInputChange}
             />
           </div>
@@ -305,16 +339,38 @@ const SignUp = () => {
 
           {/* Google Sign-Up Button */}
           <button
-            className="flex items-center justify-center bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 py-2 px-4 rounded-lg w-full mt-4"
+            className={`flex items-center justify-center bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 py-2 px-4 rounded-lg w-full mt-4 ${
+              isGoogleLoading ? "cursor-not-allowed opacity-70" : ""
+            }`}
             onClick={handleGoogleSignUp}
-            disabled={isLoading}
+            disabled={isGoogleLoading}
           >
-            <img
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-              alt="Google Logo"
-              className="h-6 w-6 mr-2"
-            />
-            Sign in with Google
+            {isGoogleLoading ? (
+              <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.003 8.003 0 0112 4V0C6.486 0 2 4.486 2 10h4c0-3.309 2.676-6 6-6v4c-2.206 0-4.149.929-5.572 2.414L6 13.291zM20 12h-4c0-5.514-4.486-10-10-10v4c3.309 0 6 2.691 6 6h4c0-3.309 2.691-6 6-6v4c-5.514 0-10 4.486-10 10h4c0-2.206 1.794-4 4-4v-4c0-4.411-3.589-8-8-8v4c2.206 0 4 1.794 4 4z"
+                ></path>
+              </svg>
+            ) : (
+              <>
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  alt="Google Logo"
+                  className="h-6 w-6 mr-2"
+                />
+                Sign in with Google
+              </>
+            )}
           </button>
 
           {errorMessage && (
