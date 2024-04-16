@@ -20,14 +20,13 @@ const DashPage5 = () => {
       <div className="justify-center text-[#0F6C96] ">
         <div>
           <h1
-            className={`text-3xl font-extrabold text-center pb-10 transition-transform duration-500 transform ${
+            className={`text-3xl font-extrabold text-center pb-3 transition-transform duration-500 transform ${
               slideIn ? "translate-y-0" : "translate-y-full"
-            }`}
-          >
+            }`}>
             FLEXIBLE & AFFORDABLE PLANS
           </h1>
           <h1
-            className={`text-xl font-medium text-center pb-10 text-black transition-transform duration-500 transform ${
+            className={`text-xl font-medium text-center pb-5 text-black transition-transform duration-500 transform ${
               slideIn ? "translate-y-0" : "translate-y-full"
             }`}
           >
@@ -79,18 +78,17 @@ const DashPage5 = () => {
                     <p>Featured Artisan badge</p>
                   </div>
                 </ul>
-                <button className="hover:bg-[#E2EDF2] hover:font-bold border border-black rounded-3xl px-5 py-3 w-full">
-                  <span className="flex items-center justify-center gap-2">
-                    <span>Get Started</span>
-                    <FaCheckCircle className="text-[#0F6C96] " />
+                <button className="hover:bg-[#E2EDF2] hover:font-bold border border-black rounded-3xl px-5 py-3 w-full bg-gray-300">
+                  <span className="flex items-center justify-center gap-2 cursor-not-allowed">
+                    <span className='text-gray-400'>Subscribed</span>
+                    <FaCheckCircle className="text-gray-500 " />
                   </span>{" "}
                 </button>
-              </div>
+              </div>  
             </div>
           </div>
+          
 
-          
-          
           <div
             className={`rounded-xl py-10 w-[350px] shadow-2xl shadow-[#0F6C96] bg-white transition-transform duration-500 transform ${
               slideIn ? "translate-y-0" : "translate-y-full"
@@ -136,7 +134,7 @@ const DashPage5 = () => {
                 </ul>
                 <button className="hover:bg-[#E2EDF2] hover:font-bold border border-black rounded-3xl px-5 py-3 w-full">
                   <span className="flex items-center justify-center gap-2">
-                    <span>Get Started</span>
+                    <span>Subscribe</span>
                     <FaCheckCircle className="text-[#0F6C96] " />
                   </span>{" "}
                 </button>

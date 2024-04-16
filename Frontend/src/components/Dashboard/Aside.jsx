@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom"
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlinePriceChange } from "react-icons/md";
+import { MdOutlineReviews } from "react-icons/md";
 import {
   RiUserSearchLine,
   RiShoppingCartLine,
@@ -49,6 +50,7 @@ const Aside = ({ onPageChange, visible }) => {
     { icon: RiShoppingCartLine, label: "Order", page: "Page3" },
     { icon: RiAdvertisementLine, label: "Post Ads", page: "Page4" },
     { icon: MdOutlinePriceChange, label: "Pricing", page: "Page5" },
+    { icon: MdOutlineReviews, label: "Review", page: "Page6" },
   ];
 
   return (
