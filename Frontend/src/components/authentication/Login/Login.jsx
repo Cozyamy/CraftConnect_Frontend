@@ -41,6 +41,7 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const endPoint = "https://53cc-105-113-33-231.ngrok-free.app/api/v1/login"
 
     if (!email || !password) {
       setFormErrors({
@@ -66,7 +67,7 @@ const Login = () => {
           console.log(token);
           // Send token to server
           const res = await axios.post(
-            'https://53cc-105-113-33-231.ngrok-free.app/api/v1/login',
+            endPoint,
             null,
             {
               headers: {
