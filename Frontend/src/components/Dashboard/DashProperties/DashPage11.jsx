@@ -1,8 +1,10 @@
+// Dashboard.jsx
+
 import React from 'react';
 import ArtisanOverviewChart from './LineChart';
 
 const Dashboard = () => {
-    const data = {
+  const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
@@ -16,12 +18,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='flex items-center flex-col justify-center shadow w-full bg-white rounded'>
-     <div className='w-full'>
-     <h1>Artisan Overview</h1>
-      
-      <ArtisanOverviewChart data={data} />
-     </div>
+    <div className='p-4 bg-white rounded shadow'>
+      <h1 className="text-xl font-semibold mb-4">Artisan Overview</h1>
+      <div className='w-full sm:w-4/5 md:w-3/5 lg:w-2/5 xl:w-1/3'>
+        <ArtisanOverviewChart data={data} />
+      </div>
     </div>
   );
 };

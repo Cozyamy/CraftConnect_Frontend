@@ -19,7 +19,7 @@ const PasswordResetModal = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      await sendPasswordResetEmail(auth, 'theodoreimonigie@gmail.com');
+      await sendPasswordResetEmail(auth, email);
       setResetEmailSent(true); // Set the state to true after sending the reset email
       // onClose(); // Close the modal after sending password reset email
     } catch (error) {

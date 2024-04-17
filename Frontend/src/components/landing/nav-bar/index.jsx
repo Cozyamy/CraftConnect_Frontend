@@ -89,6 +89,16 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
                   )}
                   {user && (
                     <button
+                      onClick={function () {
+                        navigate("/dashboard");
+                      }}
+                      className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
+                    >
+                      Dashboard
+                    </button>
+                  )}
+                  {user && (
+                    <button
                       onClick={() => setShowLogoutConfirmation(true)}
                       className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
                     >
@@ -106,7 +116,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
             {showLogoutButton && (
               <button
                 onClick={function () {
-                  navigate("/dashboard")
+                  navigate("/dashboard");
                 }}
                 className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
               >
@@ -131,6 +141,16 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
                     <CtaBtn text="Sign Up" to="/signup" />
                     <CtaBtn text="Login" to="/login" />
                   </div>
+                )}
+                {user && (
+                  <button
+                    onClick={function () {
+                      navigate("/dashboard");
+                    }}
+                    className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
+                  >
+                    Dashboard
+                  </button>
                 )}
                 {user && (
                   <button

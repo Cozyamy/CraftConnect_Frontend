@@ -3,9 +3,160 @@ import React from 'react';
 
 const DashPage1 = () => {
   return (
-    <div>
-      <h2 className="text-2xl font-bold">Page 2</h2>
-      <p>This is Page 2 content.</p>
+    <div className="p-4 bg-white rounded shadow">
+      <h2 className="text-2xl font-semibold mb-4">Page 3: Lots of Content</h2>
+      <p className="mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non
+        eleifend lacus. Duis nec lacinia dui. Nullam scelerisque, lectus nec
+        aliquam dictum, elit neque fermentum nisi, a vehicula dui massa ac
+        nisi. Praesent eget pretium justo. Donec vehicula, leo non molestie
+        sollicitudin, purus ex cursus nunc, id lacinia risus sapien a diam.
+        Quisque sed mi id justo mollis semper.
+      </p>
+      <p className="mb-4">
+        Sed posuere nec purus in sodales. Nulla varius massa eget nisi finibus
+        venenatis. Quisque fermentum, sapien quis varius mattis, ligula mauris
+        pellentesque nisi, in egestas tellus odio at leo. Morbi non nunc
+        hendrerit, tincidunt nulla ut, congue purus. Aliquam erat volutpat.
+        Donec at felis justo.
+      </p>
+      <p className="mb-4">
+        Integer interdum dolor quis nisi sodales, in aliquam nisi tristique.
+        Nunc vehicula, velit eu venenatis elementum, lectus nunc bibendum
+        lectus, ut elementum orci velit vel ligula. In maximus viverra nunc ut
+        convallis. Integer vitae est non purus condimentum feugiat.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      <p className="mb-4">
+        Etiam tincidunt, felis sit amet maximus bibendum, metus est fringilla
+        nulla, eu fermentum libero lectus ac odio. Sed vel tortor vel ipsum
+        eleifend placerat. Nullam tempus eu nisi in eleifend. Donec
+        ullamcorper, dui in dictum rhoncus, urna nisl placerat lorem, sit amet
+        interdum libero nunc sit amet ex.
+      </p>
+      <p>
+        Vestibulum feugiat mauris in risus ultricies, ut dictum quam blandit.
+        Ut quis dapibus arcu. Curabitur vel vestibulum mi, nec gravida quam.
+        Fusce sollicitudin mi id ex ultricies congue. Nulla facilisi. Aenean
+        non orci non magna lobortis posuere sit amet id leo.
+      </p>
+      {/* Add more content here */}
     </div>
   );
 };

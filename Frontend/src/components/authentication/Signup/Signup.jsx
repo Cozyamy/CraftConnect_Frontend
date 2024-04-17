@@ -334,7 +334,7 @@ const SignUp = () => {
                 ></path>
               </svg>
             ) : (
-              "Next"
+              "Sign Up"
             )}
           </button>
 
@@ -369,7 +369,7 @@ const SignUp = () => {
                   alt="Google Logo"
                   className="h-6 w-6 mr-2"
                 />
-                Sign in with Google
+                Sign Up with Google
               </>
             )}
           </button>

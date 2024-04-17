@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { CiLock, CiUnlock } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/Firebaseconfig";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth"; // Corrected import
+import { auth, googleProvider } from "../../firebase/Firebaseconfig"; // Corrected import
 import { useAuth } from "../Authprovider/AuthContext";
 import PasswordResetModal from "../PassReset/PasswdReset";
-import axios from 'axios'; // Import axios
+import axios from "axios"; // Import axios
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,10 +24,11 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [passwdResetModal, setPasswdResetModal] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
-  const handlePasswdReset=()=>{
-    setPasswdResetModal(!passwdResetModal)
-  }
+  const handlePasswdReset = () => {
+    setPasswdResetModal(!passwdResetModal);
+  };
 
   const handleLogInClick = () => {
     navigate("/signup");
@@ -41,7 +46,7 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const endPoint = "https://53cc-105-113-33-231.ngrok-free.app/api/v1/login"
+    const endPoint = "https://53cc-105-113-33-231.ngrok-free.app/api/v1/login";
 
     if (!email || !password) {
       setFormErrors({
@@ -66,15 +71,11 @@ const Login = () => {
           const token = await user.getIdToken();
           console.log(token);
           // Send token to server
-          const res = await axios.post(
-            endPoint,
-            null,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            }
-          );
+          const res = await axios.post(endPoint, null, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           console.log(res.data); // Handle response
         }
       });
@@ -90,8 +91,23 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true); // Start Google sign-in loading spinner
+
+    try {
+      // Sign in with Google using Firebase
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log(result);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error signing in with Google:", error.message);
+      // Handle error as needed
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
+
   const isReadyForSubmission = () => {
-   
     return true; // For now, always return true
   };
 
@@ -171,23 +187,23 @@ const Login = () => {
               <small className="text-red-500">Wrong password</small>
             )}
           </div>
-            
-            {/* Password */}
-            {
-              passwdResetModal && <PasswordResetModal
-              onClose={handlePasswdReset} />
-            }
+
+          {/* Password */}
+          {passwdResetModal && (
+            <PasswordResetModal onClose={handlePasswdReset} />
+          )}
 
           <div className="mb-4 text-right">
             <button
               type="button"
-              className="text-[#0F6C96] text-sm font-[400] hover:underline focus:outline-none" onClick={handlePasswdReset}
+              className="text-[#0F6C96] text-sm font-[400] hover:underline focus:outline-none"
+              onClick={handlePasswdReset}
             >
               Forgot password?
             </button>
           </div>
-          
-          
+
+          {/* Next Button */}
           <button
             type="submit"
             className={`flex items-center justify-center bg-[#0f6c96] text-white font-[400] py-2 mt-4 px-4 rounded-lg w-full border-solid border-[1px] hover:bg-white hover:border-[#0F6C96] hover:text-[#0F6C96] ${
@@ -214,7 +230,43 @@ const Login = () => {
                 ></path>
               </svg>
             ) : (
-              "Next"
+              "Sign In"
+            )}
+          </button>
+
+          {/* Google Sign In Button */}
+          <button
+            className={`flex items-center justify-center bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 py-2 px-4 rounded-lg w-full mt-4 ${
+              isGoogleLoading ? "cursor-not-allowed opacity-70" : ""
+            }`}
+            onClick={handleGoogleSignIn}
+            disabled={isGoogleLoading}
+          >
+            {isGoogleLoading ? (
+              <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.003 8.003 0 0112 4V0C6.486 0 2 4.486 2 10h4c0-3.309 2.676-6 6-6v4c-2.206 0-4.149.929-5.572 2.414L6 13.291zM20 12h-4c0-5.514-4.486-10-10-10v4c3.309 0 6 2.691 6 6h4c0-3.309 2.691-6 6-6v4c-5.514 0-10 4.486-10 10h4c0-2.206 1.794-4 4-4v-4c0-4.411-3.589-8-8-8v4c2.206 0 4 1.794 4 4z"
+                ></path>
+              </svg>
+            ) : (
+              <>
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  alt="Google Logo"
+                  className="h-6 w-6 mr-2"
+                />
+                Sign in with Google
+              </>
             )}
           </button>
 

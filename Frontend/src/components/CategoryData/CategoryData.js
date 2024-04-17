@@ -3,6 +3,7 @@ const categoryData = [
     image: "plumber.jpg",
     name: "Plumber",
     description: "Skilled in installing and repairing pipes and fixtures for water, gas, and sewage systems.",
+    price: "#10,000.00"
   },
   {
     image: "tailor.jpg",
