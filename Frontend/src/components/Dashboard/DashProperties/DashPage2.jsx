@@ -11,7 +11,6 @@ const DashPage1 = () => {
     </div>
   );
 };
-
 export default DashPage1;
 
 
