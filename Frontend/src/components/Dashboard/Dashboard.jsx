@@ -34,6 +34,7 @@ const Dashboard = () => {
             {currentPage === "Page1" && <DashPage1 />}
             {currentPage === "Page2" && <DashPage2 />}
             {currentPage === "Page5" && <DashPage5 />}
+            {currentPage === "Page6" && <DashPage6 />}
           </div>
           {/* Add more pages here */}
         </div>
