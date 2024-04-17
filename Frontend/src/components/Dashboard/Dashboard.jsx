@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Aside from "../Dashboard/Aside";
 import DashPage1 from "./DashProperties/DashPage1";
 import DashPage2 from "./DashProperties/DashPage2";
+import DashPage3 from "./DashProperties/DashPage3";
 import DashPage5 from "./DashProperties/DashPage5";
-import Header from "./DashProperties/HeaderDash";
 import DashPage6 from "./DashProperties/DashPage6";
+import Header from "./DashProperties/HeaderDash";
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState("Page1");
@@ -33,6 +34,7 @@ const Dashboard = () => {
         <div className="p-4 bg-[#e2edf2] h-screen w-full overflow-y-auto">
           {currentPage === "Page1" && <DashPage1 />}
           {currentPage === "Page2" && <DashPage2 />}
+          {currentPage === "Page3" && <DashPage3 />}
           {currentPage === "Page5" && <DashPage5 />}
           {currentPage === "Page6" && <DashPage6 />}
           {/* Add more pages here */}
