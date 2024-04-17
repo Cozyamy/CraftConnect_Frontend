@@ -20,7 +20,7 @@ const SignUp = () => {
     last_name: "",
     email: "",
     phone_number: "",
-    password: "", // Initialize with an empty string
+    password: "",
   });
   
 
@@ -71,36 +71,32 @@ const SignUp = () => {
     setErrorMessage(""); // Clear any previous error messages
   
     try {
-      const { email, password, first_name, last_name, phone_number} = formData;
+      const { email, password, first_name, last_name, phone_number } = formData;
       // Create user
       const credential = await createUserWithEmailAndPassword(auth, email, password);
   
-      // Wait for user to be available
-      auth.onAuthStateChanged(async (user) => {
-        if (user) {
-          // Get ID token
-          const token = await user.getIdToken();
-          console.log(token);
-          await sendEmailVerification(credential.user);
-          // Send token to server
-          const res = await axios.post(
-            'https://8a94-102-90-66-216.ngrok-free.app/api/v1/register',
-            {
-              first_name: first_name,
-              last_name: last_name,
-              phone_number: phone_number
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            }
-          );
-          
-          console.log(res.data);
-          navigate("/login"); // Redirect to the login page after successful signup
+      // Get ID token
+      const token = await credential.user.getIdToken();
+      console.log(token);
+      await sendEmailVerification(credential.user);
+  
+      // Send token to server
+      const res = await axios.post(
+        'https://8a94-102-90-66-216.ngrok-free.app/api/v1/register',
+        {
+          first_name: first_name,
+          last_name: last_name,
+          phone_number: phone_number
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      });
+      );
+  
+      console.log(res.data);
+      navigate("/login"); // Redirect to the login page after successful signup
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage("Email is already in use. Please use a different email.");
