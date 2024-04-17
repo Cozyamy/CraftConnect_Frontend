@@ -39,7 +39,7 @@ const DashPage3 = () => {
                 <td className="py-3 text-left">{order.date}</td>
                 <td className="py-3 px-6 text-left">
                   {order.status === 'Completed' ? (
-                    <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                    <span className="bg-[#E2EDF2] text-green-600 py-1 px-3 rounded-full text-xs">
                       Completed
                     </span>
                   ) : (
