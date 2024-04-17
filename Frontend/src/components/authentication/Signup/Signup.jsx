@@ -137,7 +137,7 @@ const SignUp = () => {
 
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/category");
+      navigate("/login");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         console.log("Email is already in use. Please use a different email.");
