@@ -9,7 +9,7 @@ import {
   googleProvider,
 } from "../../firebase/Firebaseconfig.js";
 import { useAuth } from "../Authprovider/AuthContext";
-import axios from 'axios';
+import axios from "axios";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -22,7 +22,6 @@ const SignUp = () => {
     phone_number: "",
     password: "",
   });
-  
 
   const [formErrors, setFormErrors] = useState({
     first_name: false,
@@ -59,47 +58,53 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Validate form fields before submission
     const isFormValid = Object.values(formErrors).every((error) => !error);
     if (!isFormValid) {
       console.log("Please fill out all required fields correctly.");
       return;
     }
-  
+
     setIsLoading(true); // Enable loading state during submission
     setErrorMessage(""); // Clear any previous error messages
-  
+
     try {
       const { email, password, first_name, last_name, phone_number } = formData;
       // Create user
-      const credential = await createUserWithEmailAndPassword(auth, email, password);
-  
+      const credential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
       // Get ID token
       const token = await credential.user.getIdToken();
       console.log(token);
       await sendEmailVerification(credential.user);
-  
+
       // Send token to server
       const res = await axios.post(
-        'https://8a94-102-90-66-216.ngrok-free.app/api/v1/register',
+        "https://8a94-102-90-66-216.ngrok-free.app/api/v1/register",
         {
           first_name: first_name,
           last_name: last_name,
-          phone_number: phone_number
+          phone_number: phone_number,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-  
+
       console.log(res.data);
       navigate("/login"); // Redirect to the login page after successful signup
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        setErrorMessage("Email is already in use. Please use a different email.");
+        setErrorMessage(
+          "Email is already in use. Please use a different email."
+        );
         setTimeout(() => {
           setErrorMessage("");
         }, 3000);
@@ -110,8 +115,6 @@ const SignUp = () => {
       setIsLoading(false); // Disable loading state after submission
     }
   };
-  
-  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -122,7 +125,7 @@ const SignUp = () => {
       formData.first_name.trim() !== "" &&
       formData.last_name.trim() !== "" &&
       validateEmail(formData.email) &&
-      formData.phone_number.trim().startsWith("+234")&&
+      formData.phone_number.trim().startsWith("+234") &&
       formData.phone_number.trim().length <= 14 &&
       formData.password.length >= 6 &&
       Object.values(formErrors).every((error) => !error)
@@ -131,7 +134,7 @@ const SignUp = () => {
 
   const handleGoogleSignUp = async () => {
     setIsGoogleLoading(true); // Enable loading state during Google sign-in
-  
+
     try {
       await signInWithPopup(auth, googleProvider);
       navigate("/category");
@@ -158,52 +161,52 @@ const SignUp = () => {
           </p>
         </div>
         <form
-          className="border border-2 p-8 rounded-lg w-full"
+          className="border-2 p-8 rounded-lg w-full"
           onSubmit={handleSubmit}
         >
           {/* Full Name */}
-          <div className="mb-4 flex gap-3 ">
-            <div>
-            <label
-              htmlFor="first_name"
-              className="block text-gray-600 font-[400] mb-2"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              placeholder="Enter your first name"
-              className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
-                formErrors.first_name
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-blue-500"
-              }`}
-              value={formData.first_name}
-              onChange={handleInputChange}
-            />
+          <div className="mb-4 flex gap-3 w-full">
+            <div className="flex-1">
+              <label
+                htmlFor="first_name"
+                className="block text-gray-600 font-[400] mb-2"
+              >
+                First Name
+              </label>
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                placeholder="Enter your first name"
+                className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
+                  formErrors.first_name
+                    ? "border-red-500"
+                    : "border-gray-300 focus:border-blue-500"
+                }`}
+                value={formData.first_name}
+                onChange={handleInputChange}
+              />
             </div>
-            <div>
-            <label
-              htmlFor="last_name"
-              className="block text-gray-600 font-[400] mb-2"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              placeholder="Enter your last name"
-              className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
-                formErrors.last_name
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-blue-500"
-              }`}
-              value={formData.last_name}
-              onChange={handleInputChange}
-            />
+            <div className="flex-1">
+              <label
+                htmlFor="last_name"
+                className="block text-gray-600 font-[400] mb-2"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                placeholder="Enter your last name"
+                className={`border w-full px-3 py-2 rounded-lg focus:outline-none ${
+                  formErrors.last_name
+                    ? "border-red-500"
+                    : "border-gray-300 focus:border-blue-500"
+                }`}
+                value={formData.last_name}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
 
