@@ -4,6 +4,7 @@ import DashPage1 from "./DashProperties/DashPage1";
 import DashPage2 from "./DashProperties/DashPage2";
 import DashPage5 from "./DashProperties/DashPage5";
 import Header from "./DashProperties/HeaderDash";
+import DashPage6 from "./DashProperties/DashPage6";
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState("Page1");

@@ -78,7 +78,7 @@ const DashPage5 = () => {
                     <p>Featured Artisan badge</p>
                   </div>
                 </ul>
-                <button className="hover:bg-[#E2EDF2] hover:font-bold border border-black rounded-3xl px-5 py-3 w-full bg-gray-300">
+                <button className="border border-black rounded-3xl px-5 py-3 w-full bg-gray-300">
                   <span className="flex items-center justify-center gap-2 cursor-not-allowed">
                     <span className='text-gray-400'>Subscribed</span>
                     <FaCheckCircle className="text-gray-500 " />
