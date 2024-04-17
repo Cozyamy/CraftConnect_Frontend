@@ -3,7 +3,6 @@ import { CiWallet } from "react-icons/ci";
 import { IoIosCube } from "react-icons/io";
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaClockRotateLeft } from "react-icons/fa6";
-// import Dashboard from "./DashPage11";
 
 const DashPage1 = () => {
   return (
