@@ -62,7 +62,7 @@ const DashPage6 = () => {
 
   return (
     <div className="flex flex-row justify-center items-center w-full">
-      <div className="w-[650px] bg-white pl-8 pt-14 pr-8 rounded-lg shadow-lg shadow-[#0F6C96] ">
+      <div className="w-[650px] bg-white pl-8 pt-14 pr-8 rounded-lg shadow-lg shadow-[#0F6C96] sm-max:w-[400px] ">
         <h2 className="text-2xl font-semibold mb-10">Leave a Review</h2>
         <div className="mb-4 flex items-center">
           <button
