@@ -34,7 +34,7 @@ const DashPage5 = () => {
           </h1>
         </div>
 
-        <div className="Card_cont justify-center flex gap-20 sm:flex-wrap">
+        <div className="Card_cont justify-center flex gap-20 flex-wrap">
           <div
             className={`rounded-xl py-10 w-[350px] shadow-2xl shadow-[#0F6C96] bg-white transition-transform duration-500 transform ${
               slideIn ? "translate-y-0" : "translate-y-full"
