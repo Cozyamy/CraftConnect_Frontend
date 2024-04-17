@@ -100,4 +100,3 @@ const ArtisanOverviewChart = ({ data }) => {
 };
 
 export default ArtisanOverviewChart;
-1

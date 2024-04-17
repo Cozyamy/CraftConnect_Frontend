@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { MdOutlineReviews } from "react-icons/md";
@@ -10,16 +10,16 @@ import {
   RiSettingsLine,
   RiLogoutBoxLine,
 } from "react-icons/ri";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { auth } from "../firebase/Firebaseconfig";
 
 const Aside = ({ onPageChange, visible }) => {
   const navigate = useNavigate();
-  const navHome=()=>{
-    navigate("/")
-  }
+  const navHome = () => {
+    navigate("/");
+  };
 
-    const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       await auth.signOut();
       navigate("/");
@@ -54,7 +54,11 @@ const Aside = ({ onPageChange, visible }) => {
   ];
 
   return (
-    <aside className={`bg-white w-[20rem] p-4 flex flex-col gap-16 ${visible ? 'block' : 'hidden'}`}>
+    <aside
+      className={`bg-white w-[20rem] p-4 flex flex-col gap-16 ${
+        visible ? "block" : "hidden"
+      }`}
+    >
       <div className="mt-[1.5rem] cursor-pointer" onClick={navHome}>
         <img src="/logo.png" alt="" />
       </div>
@@ -75,31 +79,20 @@ const Aside = ({ onPageChange, visible }) => {
               </button>
             </div>
           ))}
-          <div className="absolute bottom-[-16rem] right-0 left-0 flex flex-col gap-6">
-            <li
-              className={`flex items-center justify-start gap-2 cursor-pointer p-2 rounded ${
-                activePage === "Settings"
-                  ? "bg-[#1287BB] hover:bg-[#1287BB] text-white"
-                  : ""
-              }`}
-              onClick={() => handlePageChange("Settings")}
-            >
+          <div className="absolute bottom-[-12rem] right-0 left-0 flex flex-col gap-6">
+            <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white">
               <button className="flex items-center justify-center gap-2 ml-6">
                 <RiSettingsLine /> Settings
               </button>
-            </li>
-            <li
-              className={`flex items-center justify-start gap-2 cursor-pointer p-2 rounded ${
-                activePage === "Logout"
-                  ? "bg-[#1287BB] hover:bg-[#1287BB] text-white"
-                  : ""
-              }`}
-              onClick={handleLogout}
-            >
-              <button className="flex items-center justify-center gap-2 ml-6">
+            </div>
+            <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white">
+              <button
+                className="flex items-center justify-center gap-2 ml-6"
+                onClick={handleLogout}
+              >
                 <RiLogoutBoxLine /> Logout
               </button>
-            </li>
+            </div>
           </div>
         </ul>
       </div>
@@ -113,4 +106,3 @@ Aside.propTypes = {
 };
 
 export default Aside;
-

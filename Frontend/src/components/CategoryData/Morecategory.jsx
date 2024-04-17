@@ -3,14 +3,16 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import categoryData from "./CategoryData";
 import { Footer, NavBar } from "../landing";
 import Modal from "./Modal"
-const Morecategory = () => {
+const Morecategory = ({ showHeader = true, showSearch= true, showFooter = true }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredArtisans, setFilteredArtisans] = useState(categoryData);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [startIndex, setStartIndex] = useState(0);
   const [visibleCategories, setVisibleCategories] = useState(10);
   const [activeIndex, setActiveIndex] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [showHeader, setShowHeader] = useState(true);
+  // const [showFooter, setShowFooter] = useState(true);
 
   const updateVisibleCategories = () => {
     if (window.innerWidth < 338) {
@@ -89,9 +91,12 @@ const Morecategory = () => {
   return (
     <>
       <div>
-        <NavBar showLinks={false} showLogoutButton={true} />
+        {showHeader && (
+          <NavBar showLinks={false} showLogoutButton={true} />
+        )}
         <div className="pt-20 mb-8">
-          <div className="fixed top-[85px] left-0 right-0 z-10 bg-white">
+          {showSearch && (
+            <div className="fixed top-[85px] left-0 right-0 z-10 bg-white">
             <div className="container mx-auto py-4 px-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -112,6 +117,7 @@ const Morecategory = () => {
               </div>
             </div>
           </div>
+          )}
           <div className="container mx-auto mt-[-1.5rem] sticky top-[120px]">
             <hr className="my-4 border-t-2 border-gray-300 w-full" />
             <div className="flex justify-center mt-4">
@@ -189,7 +195,10 @@ const Morecategory = () => {
             </div>
           </div>
         </div>
+        {showFooter && (
         <Footer />
+
+        )}
       </div>
       
       <Modal isOpen={isModalOpen} onClose={closeModal} category={selectedCategory} />

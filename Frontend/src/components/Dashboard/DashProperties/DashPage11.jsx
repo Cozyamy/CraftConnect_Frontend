@@ -20,7 +20,7 @@ const Dashboard = () => {
   return (
     <div className='p-4 bg-white rounded shadow'>
       <h1 className="text-xl font-semibold mb-4">Artisan Overview</h1>
-      <div className='w-full sm:w-4/5 md:w-3/5 lg:w-2/5 xl:w-1/3'>
+      <div className='sm-max:w-[25rem]'>
         <ArtisanOverviewChart data={data} />
       </div>
     </div>
