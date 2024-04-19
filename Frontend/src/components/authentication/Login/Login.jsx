@@ -60,7 +60,6 @@ const Login = () => {
       });
       return;
     }
-
     setIsLoading(true);
 
     try {
@@ -89,7 +88,7 @@ const Login = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       console.log(res.data,'token');
 
       Cookies.set("token", res.data.token);
