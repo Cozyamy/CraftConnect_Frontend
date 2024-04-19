@@ -12,11 +12,11 @@ export function Landing() {
 			<main className="main">
 				<div className="main__wrapper">
 					<Fragment>
-						<Hero />
+						<Hero/>
 					</Fragment>
 
 					<Fragment>
-						<WhatsCraft />
+						<WhatsCraft/>
 					</Fragment>
 
 					<Fragment>

@@ -4,7 +4,6 @@ import { HiOutlineBars4 } from "react-icons/hi2";
 import logoheader from "/Logo-header.svg";
 import "./index.css";
 import { useAuth } from "../../authentication/Authprovider/AuthContext";
-import WhatsCraft from "../whatsCraft/index";
 
 export function NavBar({ showLinks = true, showLogoutButton = false }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +30,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
 
   const navLinks = [
     { text: "Home", to: "/" },
-    { text: "About", to: "/about" },
+    { text: "About", to: "/#about" },
     { text: "Services", to: "/category" },
     { text: "Contact", to: "/contact" },
   ];

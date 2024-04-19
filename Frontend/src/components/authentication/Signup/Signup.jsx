@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiLock, CiUnlock } from "react-icons/ci";
 import {
@@ -7,9 +7,12 @@ import {
   signInWithPopup,
   sendEmailVerification,
   googleProvider,
+  signOut,
 } from "../../firebase/Firebaseconfig.js";
 import { useAuth } from "../Authprovider/AuthContext";
 import axios from "axios";
+import {apiKey} from "../Api"
+
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -87,26 +90,30 @@ const SignUp = () => {
       //Checking if email is verified
       if (!credential.user.emailVerified) {
         setErrorMessage("Please verify your email address before logging in.");
-        setIsLoading(false);
-        return;
+        // setIsLoading(false);
+        // return;
       }
 
-      // Send token to server
-      const res = await axios.post(
-        "https://8a94-102-90-66-216.ngrok-free.app/api/v1/register",
-        {
-          first_name: first_name,
-          last_name: last_name,
-          phone_number: phone_number,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      try {
+        // Send token to server
+        const res = await axios.post(`${apiKey}register`,
+          {
+            first_name: first_name,
+            last_name: last_name,
+            phone_number: phone_number,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      console.log(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.log("Error sending token to server:", error.message);
+      }
+      signOut(auth);
       navigate("/login"); // Redirect to the login page after successful signup
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
