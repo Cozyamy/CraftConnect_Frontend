@@ -81,7 +81,15 @@ const SignUp = () => {
       // Get ID token
       const token = await credential.user.getIdToken();
       console.log(token);
+      // Email verification
       await sendEmailVerification(credential.user);
+
+      //Checking if email is verified
+      if (!credential.user.emailVerified) {
+        setErrorMessage("Please verify your email address before logging in.");
+        setIsLoading(false);
+        return;
+      }
 
       // Send token to server
       const res = await axios.post(

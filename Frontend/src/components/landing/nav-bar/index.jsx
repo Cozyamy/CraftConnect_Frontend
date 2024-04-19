@@ -32,7 +32,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
   const navLinks = [
     { text: "Home", to: "/" },
     { text: "About", to: "/about" },
-    { text: "Services", to: "/WhatsCraft" },
+    { text: "Services", to: "/category" },
     { text: "Contact", to: "/contact" },
   ];
 

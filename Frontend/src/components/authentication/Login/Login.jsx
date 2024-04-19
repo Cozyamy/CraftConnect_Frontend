@@ -3,7 +3,7 @@ import { CiLock, CiUnlock } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import {
   signInWithEmailAndPassword,
-  GoogleAuthProvider,
+  // GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth"; // Corrected import
 import { auth, googleProvider } from "../../firebase/Firebaseconfig"; // Corrected import
@@ -25,6 +25,7 @@ const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [passwdResetModal, setPasswdResetModal] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handlePasswdReset = () => {
     setPasswdResetModal(!passwdResetModal);
@@ -47,7 +48,7 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const endPoint = "https://53cc-105-113-33-231.ngrok-free.app/api/v1/login";
-
+  
     if (!email || !password) {
       setFormErrors({
         email: !email,
@@ -56,14 +57,27 @@ const Login = () => {
       });
       return;
     }
-
+  
     setIsLoading(true);
-
+  
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    
+      // Check if email is verified
+      if (!userCredential.user.emailVerified) {
+        setFormErrors({
+          email: false,
+          password: false,
+          loginError: true,
+        });
+        setErrorMessage("Please verify your email address before logging in."); // Update errorMessage
+        setIsLoading(false);
+        return;
+      }
+  
       setLoginSuccess(true); // Set login success message to true
       navigate("/dashboard"); // Redirect after successful login
-
+  
       // Wait for user to be available
       auth.onAuthStateChanged(async (user) => {
         if (user) {
@@ -81,15 +95,28 @@ const Login = () => {
       });
     } catch (error) {
       console.error("Error signing in:", error.message);
-      setFormErrors({
-        email: false,
-        password: false,
-        loginError: true,
-      });
+      if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        // Incorrect email or password
+        setFormErrors({
+          email: false,
+          password: false,
+          loginError: true,
+        });
+        setErrorMessage("Incorrect email or password."); // Update errorMessage
+      } else {
+        // Other errors
+        setFormErrors({
+          email: false,
+          password: false,
+          loginError: true,
+        });
+        setErrorMessage("An error occurred while logging in. Please try again later."); // Update errorMessage
+      }
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true); // Start Google sign-in loading spinner
