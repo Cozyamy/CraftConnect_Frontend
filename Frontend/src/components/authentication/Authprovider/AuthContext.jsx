@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [userMode, setUserMode] = useState(Cookies.get("userMode"));
 
   const changeMode = (mode) => {
-    if (mode == "artisan" && !user.artisan) return;
+    // if (mode == "artisan" && !user.artisan) return;
     setUserMode(mode);
     Cookies.set("userMode", mode);
   };

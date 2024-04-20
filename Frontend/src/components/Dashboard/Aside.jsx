@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../authentication/Authprovider/AuthContext";
 import { auth } from "../firebase/Firebaseconfig";
 import { useContext } from "react";
+import Profile from "./DashProperties/Profile";
 
 const Aside = ({ visible }) => {
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ const Aside = ({ visible }) => {
   };
 
   const buttons = [
-    { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard" },
+    { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard",
+  mode: "artisan" },
+    { icon: IoHomeOutline, label: "Book an Artisan", route: "/category" },
     // { icon: RiUserSearchLine, label: "Browse Artisan", page: "Page2" },
     { icon: RiShoppingCartLine, label: "Order", route: "/dashboard/orders" },
     {
@@ -56,10 +59,13 @@ const Aside = ({ visible }) => {
       }`}
     >
       <div className="mt-[1rem]">
-        <ul className="relative flex flex-col gap-6">
+        <div className="w-[150px] h-auto cursor-pointer mt-[1rem]" onClick={()=> navigate("/") } >
+        <img src="/logo.png" alt="" className="w-full h-full" />
+        </div>
+        <ul className="relative flex flex-col gap-6 mt-[5rem]">
           {buttons.map((button, index) => {
             return (
-              ((button.mode != "artisan") ||  userMode =='artisan' ) &&  (
+              (button.mode != "artisan" || userMode == "artisan") && (
                 <Link
                   key={index}
                   to={button.route}
@@ -77,7 +83,7 @@ const Aside = ({ visible }) => {
             );
           })}
 
-          <div className="absolute bottom-[-12rem] right-0 left-0 flex flex-col gap-6">
+          <div className="absolute bottom-[-15rem] right-0 left-0 flex flex-col gap-6">
             <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white">
               <button className="flex items-center justify-center gap-2 ml-6">
                 <RiSettingsLine /> Settings
