@@ -28,7 +28,7 @@ const Login = () => {
   const [passwdResetModal, setPasswdResetModal] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { setToken } = useContext(AuthContext)
+  const { setToken,setUser } = useContext(AuthContext)
 
   const handlePasswdReset = () => {
     setPasswdResetModal(!passwdResetModal);
@@ -82,20 +82,24 @@ const Login = () => {
 
 
       const token = await userCredential.user.getIdToken();
-
-      const res = await axios.post(`${apiKey}login`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log(res.data,'token');
-
-      Cookies.set("token", res.data.token);
-      setToken(res.data.token);
-
-      // Set token in cookie
- 
+      setUser(userCredential.user);
+    //  try {
+    //    const res = await axios.post(`${apiKey}login`, null, {
+    //      headers: {
+    //        Authorization: `Bearer ${token}`,
+    //      },
+    //    });
+    //    console.log(res.data,'token');
+    //    Cookies.set("token", res.data.token);
+    //    setToken(res.data.token);
+  
+    //  } catch (error) {
+    //   // console.log(error);
+    //  } finally{
+    
+    //  }
+    
+     navigate("/dashboard")
     } catch (error) {
     console.error("Error signing in:", error.message);
     if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
@@ -105,7 +109,7 @@ const Login = () => {
         password: false,
         loginError: true,
       });
-      setErrorMessage("Incorrect email or password."); // Update errorMessage
+      setErrorMessage("Incorrect email or password.");
     } else {
       // Other errors
       setFormErrors({
@@ -113,7 +117,7 @@ const Login = () => {
         password: false,
         loginError: true,
       });
-      setErrorMessage("An error occurred while logging in. Please try again later."); // Update errorMessage
+      setErrorMessage("An error occurred while logging in. Please try again later.");
     }
   } finally {
     setIsLoading(false);
@@ -170,6 +174,7 @@ return (
             type="email"
             id="email"
             name="email"
+            value="Cletussam12@yahoo.com"
             placeholder="Enter your email address"
             className={`border-gray-300 border w-full px-3 py-2 rounded-lg focus:outline-none ${formErrors.email || formErrors.loginError
                 ? "border-red-500"
@@ -193,6 +198,7 @@ return (
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
+              value="123456"
               placeholder="Enter your password"
               className={`border-gray-300 border w-full px-3 py-2 rounded-lg pr-10 focus:outline-none ${formErrors.password || formErrors.loginError
                   ? "border-red-500"

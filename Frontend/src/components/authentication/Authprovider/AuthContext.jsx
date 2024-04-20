@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { auth } from "../../firebase/Firebaseconfig"; // Adjust the path as needed
+import { auth, onAuthStateChanged } from "../../firebase/Firebaseconfig"; // Adjust the path as needed
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -9,6 +9,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(Cookies.get("token"));
+  const [loading, setLoad] = useState(true);
 
   const [userMode, setUserMode] = useState(Cookies.get("userMode"));
 
@@ -21,17 +22,31 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function newFunction() {
       if (token) {
-        const res = await axios.get(
-          "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        try {
+          const res = await axios.get(
+            "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setUser(res.data);
+          console.log("User is", res.data);
+        } catch (error) {
+          console.log("Error", error);
+        }
+      } else {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setUser(user);
+          } else {
+            setUser(null);
           }
-        );
-        setUser(res.data);
-        console.log("User is", res.data);
+          setLoad(false);
+        });
       }
+      setLoad(false);
     }
     newFunction();
   }, [token]);
@@ -43,7 +58,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, logout, userMode, changeMode }}>
+    <AuthContext.Provider
+      value={{ user, logout, userMode, changeMode, setUser, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
