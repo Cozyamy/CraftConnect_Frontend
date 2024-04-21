@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Aside from "../Dashboard/Aside";
 import Header from "./DashProperties/HeaderDash";
-import { NavBar } from "../landing";
+// import { NavBar } from "../landing";
 
 const DashboardContainer = ({children}) => {
   const [asideVisible, setAsideVisible] = useState(true);

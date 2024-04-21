@@ -1,1 +1,1 @@
-export const apiKey = "https://4b59-197-210-227-21.ngrok-free.app/api/v1/"
+export const apiKey = "http://37.27.82.158:7000/api/v1/"

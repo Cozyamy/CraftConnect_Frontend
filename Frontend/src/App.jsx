@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import {
+  Navigate,
   RouterProvider,
   createBrowserRouter,
   useNavigate,
@@ -9,7 +9,6 @@ import SignUp from "./components/authentication/Signup/Signup";
 import Login from "./components/authentication/Login/Login";
 import Morecategory from "./components/CategoryData/Morecategory";
 import {
- 
   useAuth,
 } from "./components/authentication/Authprovider/AuthContext"; // Import useAuth
 import DashboardLayout from "./components/Dashboard/Dashboard";
@@ -23,15 +22,14 @@ import DashPage6 from "./components/Dashboard/DashProperties/DashPage6";
 const ProtectedRoute = ({ element, path }) => {
   const navigate = useNavigate();
   const { user,loading } = useAuth();
-  // if (!user  && !loading ) {
-  //     navigate("login");
-  // }
+  if (!user  && !loading ) {
+      navigate("login");
+  }
   return <>{element}</>;
 };
 
 export default function App() {
-  const {loading}= useAuth();
-
+  const {loading, userMode}= useAuth();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -55,7 +53,7 @@ export default function App() {
         <ProtectedRoute
           element={
             <DashboardLayout>
-              <DashPage1 />
+             { userMode == 'artisan'?  <DashPage1 /> : <Navigate to="/dashboard/orders" />}
             </DashboardLayout>
           }
         />

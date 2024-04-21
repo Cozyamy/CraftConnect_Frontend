@@ -7,7 +7,7 @@ import {
   // GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, googleProvider } from "../../firebase/Firebaseconfig";
+import { auth, googleProvider, updateProfile } from "../../firebase/Firebaseconfig";
 import { AuthContext} from "../Authprovider/AuthContext";
 import PasswordResetModal from "../PassReset/PasswdReset";
 import axios from "axios";
@@ -83,21 +83,21 @@ const Login = () => {
 
       const token = await userCredential.user.getIdToken();
       setUser(userCredential.user);
-    //  try {
-    //    const res = await axios.post(`${apiKey}login`, null, {
-    //      headers: {
-    //        Authorization: `Bearer ${token}`,
-    //      },
-    //    });
-    //    console.log(res.data,'token');
-    //    Cookies.set("token", res.data.token);
-    //    setToken(res.data.token);
+     try {
+       const res = await axios.post(`${apiKey}login`, null, {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       });
+       console.log(res.data,'token');
+       Cookies.set("token", res.data.token);
+       setToken(res.data.token);
   
-    //  } catch (error) {
-    //   // console.log(error);
-    //  } finally{
-    
-    //  }
+     } catch (error) {
+      // console.log(error);
+     } finally{
+        "Successful"
+     }
     
      navigate("/dashboard")
     } catch (error) {
@@ -174,7 +174,7 @@ return (
             type="email"
             id="email"
             name="email"
-            value="Cletussam12@yahoo.com"
+            value="Cletusoyinesam@gmail.com"
             placeholder="Enter your email address"
             className={`border-gray-300 border w-full px-3 py-2 rounded-lg focus:outline-none ${formErrors.email || formErrors.loginError
                 ? "border-red-500"

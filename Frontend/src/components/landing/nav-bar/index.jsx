@@ -48,6 +48,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
               />
             </a>
           </div>
+        {/* <span>{user?.email}</span> */}
           {showLinks && (
             <ul
               className={`flex items-center justify-center gap-8 sm-max:absolute sm-max:bg-white sm-max:shadow ${
@@ -174,29 +175,30 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
             </div>
           )}
 
-          {showLogoutConfirmation && (
-            <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-              <div className="modal-content bg-white p-5 rounded-lg shadow-lg">
-                <h2 className="text-xl font-bold mb-4">
-                  Are you sure you want to log out?
-                </h2>
-                <div className="flex justify-center gap-4">
-                  <button
-                    onClick={handleLogout}
-                    className="bg-[#1287BB] text-white px-4 py-2 rounded-lg hover:bg-transparent hover:text-[#1287BB] border border-[#1287BB]"
-                  >
-                    Yes
-                  </button>
-                  <button
-                    onClick={() => setShowLogoutConfirmation(false)}
-                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-transparent hover:text-red-500"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+{showLogoutConfirmation && (
+  <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+    <div className="modal-content bg-white p-5 rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold mb-4">
+        Are you sure you want to log out?
+      </h2>
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={handleLogout}
+          className="bg-[#1287BB] text-white px-4 py-2 rounded-lg hover:bg-transparent hover:text-[#1287BB] border border-[#1287BB]"
+        >
+          Yes
+        </button>
+        <button
+          onClick={() => setShowLogoutConfirmation(false)}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-transparent hover:text-red-500"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
         </div>
       </header>
     </Fragment>

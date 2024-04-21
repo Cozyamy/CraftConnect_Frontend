@@ -5,16 +5,7 @@ import { Link } from "react-router-dom";
 export function Category() {
   const { user } = useAuth();
 
-  const handleSeeMoreClick = () => {
-    if (user) {
-      // User is logged in, redirect to the category page
-      window.location.href = "/category";
-    } else {
-      // User is not logged in, redirect to the sign-up page
-      window.location.href = "/signup";
-    }
-  };
-
+  
   return (
     <div className={`${styles.category_box} bg-[#0F6C96] max-w-full`}>
       <div className={`${styles.box_header} py-12 w-10/12 my-0 mx-auto`}>
@@ -96,9 +87,10 @@ export function Category() {
               <p className="font-semibold text-white text-lg">Plumbers</p>
             </div>
           </div>
-          <div
+          <Link
+          to={"/category"}
             className={`${styles.see_more} flex items-center justify-center mt-10 gap-2 cursor-pointer rounded-lg py-2 px-4 bg-white hover:scale-110 sm:self-start self-center`}
-            onClick={handleSeeMoreClick}
+           
           >
             <div className="font-semibold text-xl text-[#0F6C96] flex items-center">
               See more
@@ -110,7 +102,7 @@ export function Category() {
                 className="max-w-full"
               />
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

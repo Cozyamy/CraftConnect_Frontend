@@ -21,45 +21,44 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     async function newFunction() {
-      if (token) {
-        try {
-          const res = await axios.get(
-            "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setUser(res.data);
-          console.log("User is", res.data);
-        } catch (error) {
-          console.log("Error", error);
+      // if (token) {
+      //   try {
+      //     const res = await axios.get(
+      //       "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
+      //       {
+      //         headers: {
+      //           Authorization: `Bearer ${token}`,
+      //         },
+      //       }
+      //     );
+      //     setUser(res.data);
+      //     console.log("User is", res.data);
+      //   } catch (error) {
+      //     console.log("Error", error);
+      //   }
+      //   return;
+      // }
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser(user);
+        } else {
+          setUser(null);
         }
-      } else {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            setUser(user);
-          } else {
-            setUser(null);
-          }
-          setLoad(false);
-        });
-      }
-      setLoad(false);
+        setLoad(false);
+      });
     }
     newFunction();
   }, [token]);
 
-  const logout = () => {
-    // Clear the user ID token from the cookie on logout
-    Cookies.remove("firebaseToken_UserIdToken"); // Modify the cookie name with prefix
-    return signOut(auth);
+  const logOut = async () => {
+    Cookies.remove("token");
+    await signOut(auth);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, logout, userMode, changeMode, setUser, loading }}
+      value={{ user, logOut, userMode, changeMode, setUser, loading }}
     >
       {children}
     </AuthContext.Provider>
