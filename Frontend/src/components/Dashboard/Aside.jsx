@@ -33,13 +33,13 @@ const Aside = ({ visible }) => {
 
   const buttons = [
     { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard",
-  mode: "artisan" },
+    mode: "artisan" },
     { icon: IoHomeOutline, label: "Book an Artisan", route: "/category" },
     // { icon: RiUserSearchLine, label: "Browse Artisan", page: "Page2" },
     { icon: RiShoppingCartLine, label: "Order", route: "/dashboard/orders" },
     {
       icon: RiShoppingCartLine,
-      label: "Ads",
+      label: "ads",
       route: "/dashboard/ads",
       mode: "artisan",
     },
