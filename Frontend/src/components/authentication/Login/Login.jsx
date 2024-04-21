@@ -84,8 +84,11 @@ const Login = () => {
       }
 
       setLoginSuccess(true); // Set login success message to true
-      // navigate("/dashboard"); // Redirect after successful login
+      navigate("/dashboard"); // Redirect after successful login
 
+      const token = await userCredential.user.getIdToken();
+       const res = await loginWithServer(token)
+      console.log({ res });
 
       navigate("/dashboard");
     } catch (error) {
@@ -168,7 +171,7 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
-              value="Cletusoyinesam@gmail.com"
+              // value="Cletusoyinesam@gmail.com"
               placeholder="Enter your email address"
               className={`border-gray-300 border w-full px-3 py-2 rounded-lg focus:outline-none ${
                 formErrors.email || formErrors.loginError
@@ -193,7 +196,7 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                value="123456"
+                // value="123456"
                 placeholder="Enter your password"
                 className={`border-gray-300 border w-full px-3 py-2 rounded-lg pr-10 focus:outline-none ${
                   formErrors.password || formErrors.loginError

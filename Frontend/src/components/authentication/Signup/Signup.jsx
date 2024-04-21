@@ -89,10 +89,10 @@ const SignUp = () => {
       // Email verification
       await sendEmailVerification(credential.user);
 
-      //Checking if email is verified
+      // Checking if email is verified
       if (!credential.user.emailVerified) {
         setErrorMessage("Please verify your email address before logging in.");
-        // setIsLoading(false);
+        setIsLoading(false);
         // return;
       }
 
@@ -118,7 +118,8 @@ const SignUp = () => {
       }
 
       await signOut(auth);
-      navigate("/login"); // Redirect to the login page after successful signup
+      // navigate("/login"); // Redirect to the login page after successful signup
+      window.location.href = '/login'
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage(
