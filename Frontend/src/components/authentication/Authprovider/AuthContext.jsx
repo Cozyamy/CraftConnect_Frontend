@@ -3,6 +3,7 @@ import { auth, onAuthStateChanged } from "../../firebase/Firebaseconfig"; // Adj
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { loginWithServer } from "../Api";
 
 export const AuthContext = createContext();
 
@@ -20,35 +21,44 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    async function newFunction() {
-      // if (token) {
-      //   try {
-      //     const res = await axios.get(
-      //       "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
-      //       {
-      //         headers: {
-      //           Authorization: `Bearer ${token}`,
-      //         },
-      //       }
-      //     );
-      //     setUser(res.data);
-      //     console.log("User is", res.data);
-      //   } catch (error) {
-      //     console.log("Error", error);
-      //   }
-      //   return;
-      // }
-
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setUser(user);
-        } else {
-          setUser(null);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUser(user);
+        const token = await user.getIdToken();
+        try {
+          const res = await loginWithServer(token);
+          console.log({ res });
+        } catch (error) {
+          console.log(error);
         }
         setLoad(false);
-      });
-    }
-    newFunction();
+      } else {
+        setUser(null);
+        setLoad(false);
+      }
+    });
+    // async function newFunction() {
+    // if (token) {
+    //   try {
+    //     const res = await axios.get(
+    //       "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       }
+    //     );
+    //     setUser(res.data);
+    //     console.log("User is", res.data);
+    //   } catch (error) {
+    //     console.log("Error", error);
+    //   }
+    //   return;
+    // }
+
+    // setLoad(false);
+    // }
+    // newFunction();
   }, [token]);
 
   const logOut = async () => {

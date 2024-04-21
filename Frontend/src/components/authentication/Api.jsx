@@ -1,1 +1,0 @@
-export const apiKey = "http://37.27.82.158:7000/api/v1/"

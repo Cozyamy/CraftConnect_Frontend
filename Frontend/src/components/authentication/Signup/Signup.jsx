@@ -12,7 +12,7 @@ import {
 } from "../../firebase/Firebaseconfig.js";
 import { useAuth } from "../Authprovider/AuthContext";
 import axios from "axios";
-import { apiKey } from "../Api";
+import { apiKey } from "../Api.js";
 
 const SignUp = () => {
   const navigate = useNavigate();

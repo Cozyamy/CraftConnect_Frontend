@@ -122,7 +122,7 @@ const Aside = ({ visible }) => {
 };
 
 Aside.propTypes = {
-  onPageChange: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func,
   visible: PropTypes.bool.isRequired,
 };
 

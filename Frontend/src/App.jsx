@@ -22,9 +22,9 @@ import DashPage6 from "./components/Dashboard/DashProperties/DashPage6";
 const ProtectedRoute = ({ element, path }) => {
   const navigate = useNavigate();
   const { user,loading } = useAuth();
-  if (!user  && !loading ) {
-      navigate("login");
-  }
+  // if (!user  && !loading ) {
+  //     navigate("login");
+  // }
   return <>{element}</>;
 };
 

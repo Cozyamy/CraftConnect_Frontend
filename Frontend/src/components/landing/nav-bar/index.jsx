@@ -10,11 +10,11 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
 
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logOut } = useAuth();
   console.log("Users:", user);
 
   const handleLogout = () => {
-    logout()
+    logOut()
       .then(() => {
         setShowLogoutConfirmation(false);
         navigate("/");
