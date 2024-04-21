@@ -1,7 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const UploadPicture = ({ onFileChange }) => {
   const fileInputRef = useRef(null);
+  const [profilePicture, setProfilePicture] = useState("");
+
+  useEffect(() => {
+    // Check if profile picture is stored in local storage
+    const storedPicture = localStorage.getItem("profilePicture");
+    if (storedPicture) {
+      setProfilePicture(storedPicture);
+    }
+  }, []);
 
   const handleProfilePictureClick = () => {
     fileInputRef.current.click();
@@ -14,7 +23,10 @@ const UploadPicture = ({ onFileChange }) => {
       // Update the src attribute of the img element with the selected image
       const reader = new FileReader();
       reader.onload = (e) => {
-        document.getElementById("profile-picture").src = e.target.result;
+        const imageData = e.target.result;
+        setProfilePicture(imageData);
+        // Store profile picture in local storage
+        localStorage.setItem("profilePicture", imageData);
       };
       reader.readAsDataURL(file);
     }
@@ -27,8 +39,7 @@ const UploadPicture = ({ onFileChange }) => {
         onClick={handleProfilePictureClick}
       >
         <img
-          id="profile-picture"
-          src=""
+          src={profilePicture}
           alt=""
           className="w-full h-full rounded-full"
         />

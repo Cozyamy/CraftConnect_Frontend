@@ -6,7 +6,7 @@ import { AuthContext } from "../../authentication/Authprovider/AuthContext";
 import UploadPicture from "./Uploadpic";
 
 const Header = ({ toggleAside, asideVisible }) => {
-  const { changeMode, userMode } = useContext(AuthContext);
+  const {user, changeMode, userMode } = useContext(AuthContext);
   const [profilePicture, setProfilePicture] = useState("");
 
   const handleFileChange = (file) => {
@@ -20,7 +20,7 @@ const Header = ({ toggleAside, asideVisible }) => {
 
   return (
     <header className="p-12 flex items-center justify-between bg-[#e2edf2] border-b-4">
-      <h1 className="text-xl font-bold">Welcome Augstine</h1>
+      <h1 className="text-2xl">Welcome {user && user.displayName ? user.displayName : "Guest"}</h1>
 
       <div className="flex items-center justify-center gap-4">
         <button

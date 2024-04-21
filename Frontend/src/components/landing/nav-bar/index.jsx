@@ -104,7 +104,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
                       className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
                     >
                       {user.displayName
-                        ? user.displayName.substring(0, 2)
+                        ? user.displayName.split(' ')[0]
                         : "Logout"}
                     </button>
                   )}
@@ -129,7 +129,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
                 onClick={() => setShowLogoutConfirmation(true)}
                 className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
               >
-                {user.displayName ? user.displayName.substring(0, 2) : "Logout"}
+                {user.displayName ? user.displayName.split(' ')[0] : "Logout"}
               </button>
             )}
           </div>
@@ -159,7 +159,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
                     className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
                   >
                     {user.displayName
-                      ? user.displayName.substring(0, 2)
+                      ? user.displayName.split(' ')[0]
                       : "Logout"}
                   </button>
                 )}
