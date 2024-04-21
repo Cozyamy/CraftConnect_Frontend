@@ -8,11 +8,11 @@ import {
   sendEmailVerification,
   googleProvider,
   signOut,
+  updateProfile,
 } from "../../firebase/Firebaseconfig.js";
 import { useAuth } from "../Authprovider/AuthContext";
 import axios from "axios";
-import {apiKey} from "../Api"
-
+import { apiKey } from "../Api.js";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -81,22 +81,25 @@ const SignUp = () => {
         password
       );
 
+      await updateProfile(credential.user,{ displayName: first_name + " " + last_name });
+
       // Get ID token
       const token = await credential.user.getIdToken();
       console.log(token);
       // Email verification
       await sendEmailVerification(credential.user);
 
-      //Checking if email is verified
+      // Checking if email is verified
       if (!credential.user.emailVerified) {
         setErrorMessage("Please verify your email address before logging in.");
-        // setIsLoading(false);
+        setIsLoading(false);
         // return;
       }
 
       try {
         // Send token to server
-        const res = await axios.post(`${apiKey}register`,
+        const res = await axios.post(
+          `${apiKey}register`,
           {
             first_name: first_name,
             last_name: last_name,
@@ -113,8 +116,10 @@ const SignUp = () => {
       } catch (error) {
         console.log("Error sending token to server:", error.message);
       }
-      signOut(auth);
-      navigate("/login"); // Redirect to the login page after successful signup
+
+      await signOut(auth);
+      // navigate("/login"); // Redirect to the login page after successful signup
+      window.location.href = '/login'
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage(

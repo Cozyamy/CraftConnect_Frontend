@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
+import { CiBookmark } from "react-icons/ci";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { MdOutlineReviews } from "react-icons/md";
 import {
@@ -18,6 +20,9 @@ const Aside = ({ visible }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userMode } = useContext(AuthContext);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+
   const navHome = () => {
     navigate("/");
   };
@@ -52,6 +57,10 @@ const Aside = ({ visible }) => {
     { icon: MdOutlineReviews, label: "Review", route: "/dashboard/reviews" },
   ];
 
+  const toggleProfileModal = () => {
+    setShowProfileModal(!showProfileModal);
+  };
+
   return (
     <aside
       className={`bg-white w-[20rem] p-4 flex flex-col gap-16 ${
@@ -84,7 +93,7 @@ const Aside = ({ visible }) => {
           })}
 
           <div className="absolute bottom-[-15rem] right-0 left-0 flex flex-col gap-6">
-            <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white">
+            <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white" onClick={toggleProfileModal}>
               <button className="flex items-center justify-center gap-2 ml-6">
                 <RiSettingsLine /> Settings
               </button>
@@ -100,12 +109,16 @@ const Aside = ({ visible }) => {
           </div>
         </ul>
       </div>
+
+      {showProfileModal && <Profile setShowProfileModal={setShowProfileModal} />
+    }
+
     </aside>
   );
 };
 
 Aside.propTypes = {
-  onPageChange: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func,
   visible: PropTypes.bool.isRequired,
 };
 

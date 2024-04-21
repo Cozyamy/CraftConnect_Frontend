@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, sendPasswordResetEmail, sendEmailVerification, GoogleAuthProvider, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,updateProfile, onAuthStateChanged, signInWithPopup, sendPasswordResetEmail, sendEmailVerification, GoogleAuthProvider, signOut } from "firebase/auth";
 
 
 const firebaseConfig = {
@@ -18,4 +18,4 @@ const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app );
 const googleProvider = new GoogleAuthProvider();
 
-export { auth, createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail, signOut, sendEmailVerification, googleProvider };
+export { auth, createUserWithEmailAndPassword, signInWithPopup,updateProfile, onAuthStateChanged, sendPasswordResetEmail, signOut, sendEmailVerification, googleProvider };

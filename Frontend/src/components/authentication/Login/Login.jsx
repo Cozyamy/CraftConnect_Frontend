@@ -7,15 +7,18 @@ import {
   // GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, googleProvider } from "../../firebase/Firebaseconfig";
-import { AuthContext} from "../Authprovider/AuthContext";
+import {
+  auth,
+  googleProvider,
+  updateProfile,
+} from "../../firebase/Firebaseconfig";
+import { AuthContext } from "../Authprovider/AuthContext";
 import PasswordResetModal from "../PassReset/PasswdReset";
 import axios from "axios";
-import {apiKey} from "../Api"
+import { apiKey, loginWithServer } from "../Api";
 
 const Login = () => {
   const navigate = useNavigate();
-
 
   const [formErrors, setFormErrors] = useState({
     email: false,
@@ -28,7 +31,7 @@ const Login = () => {
   const [passwdResetModal, setPasswdResetModal] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { setToken,setUser } = useContext(AuthContext)
+  const { setToken, setUser } = useContext(AuthContext);
 
   const handlePasswdReset = () => {
     setPasswdResetModal(!passwdResetModal);
@@ -50,7 +53,6 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    
 
     if (!email || !password) {
       setFormErrors({
@@ -63,7 +65,11 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
       // Check if email is verified
       if (!userCredential.user.emailVerified) {
@@ -78,255 +84,250 @@ const Login = () => {
       }
 
       setLoginSuccess(true); // Set login success message to true
-      // navigate("/dashboard"); // Redirect after successful login
-
+      navigate("/dashboard"); // Redirect after successful login
 
       const token = await userCredential.user.getIdToken();
-      setUser(userCredential.user);
-    //  try {
-    //    const res = await axios.post(`${apiKey}login`, null, {
-    //      headers: {
-    //        Authorization: `Bearer ${token}`,
-    //      },
-    //    });
-    //    console.log(res.data,'token');
-    //    Cookies.set("token", res.data.token);
-    //    setToken(res.data.token);
-  
-    //  } catch (error) {
-    //   // console.log(error);
-    //  } finally{
-    
-    //  }
-    
-     navigate("/dashboard")
+       const res = await loginWithServer(token)
+      console.log({ res });
+
+      navigate("/dashboard");
     } catch (error) {
-    console.error("Error signing in:", error.message);
-    if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-      // Incorrect email or password
-      setFormErrors({
-        email: false,
-        password: false,
-        loginError: true,
-      });
-      setErrorMessage("Incorrect email or password.");
-    } else {
-      // Other errors
-      setFormErrors({
-        email: false,
-        password: false,
-        loginError: true,
-      });
-      setErrorMessage("An error occurred while logging in. Please try again later.");
+      console.error("Error signing in:", error.message);
+      if (
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        // Incorrect email or password
+        setFormErrors({
+          email: false,
+          password: false,
+          loginError: true,
+        });
+        setErrorMessage("Incorrect email or password.");
+      } else {
+        // Other errors
+        setFormErrors({
+          email: false,
+          password: false,
+          loginError: true,
+        });
+        setErrorMessage(
+          "An error occurred while logging in. Please try again later."
+        );
+      }
+    } finally {
+      setIsLoading(false);
     }
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true); // Start Google sign-in loading spinner
 
-const handleGoogleSignIn = async () => {
-  setIsGoogleLoading(true); // Start Google sign-in loading spinner
+    try {
+      // Sign in with Google using Firebase
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log(result);
+      const user = await result.user.getIdToken();
+      console.log({ user });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error signing in with Google:", error.message);
+      // Handle error as needed
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
 
-  try {
-    // Sign in with Google using Firebase
-    const result = await signInWithPopup(auth, googleProvider);
-    console.log(result);
-    navigate("/dashboard");
-  } catch (error) {
-    console.error("Error signing in with Google:", error.message);
-    // Handle error as needed
-  } finally {
-    setIsGoogleLoading(false);
-  }
-};
+  const isReadyForSubmission = () => {
+    return true; // For now, always return true
+  };
 
-const isReadyForSubmission = () => {
-  return true; // For now, always return true
-};
-
-return (
-  <div className="flex flex-col justify-center items-center min-h-screen w-screen bg-white">
-    <div className="w-full sm:max-w-[42rem]">
-      <div className="flex flex-col items-center">
-        <h1 className="text-2xl font-semibold mb-2 text-black">
-          Welcome Back
-        </h1>
-        <p className="text-gray-600 mb-4">
-          Please enter your login details below
-        </p>
-      </div>
-      <form
-        className="border border-2 p-8 rounded-lg w-full"
-        onSubmit={handleSubmit}
-      >
-        {loginSuccess && ( // Render success message if loginSuccess is true
-          <p className="text-green-500 mb-4">Login successful</p>
-        )}
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-gray-600 font-[400] mb-2"
-          >
-            Email Address
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value="Cletussam12@yahoo.com"
-            placeholder="Enter your email address"
-            className={`border-gray-300 border w-full px-3 py-2 rounded-lg focus:outline-none ${formErrors.email || formErrors.loginError
-                ? "border-red-500"
-                : "focus:border-blue-500"
-              }`}
-          />
-          {formErrors.email && (
-            <small className="text-red-500">Invalid email address</small>
-          )}
+  return (
+    <div className="flex flex-col justify-center items-center min-h-screen w-screen bg-white">
+      <div className="w-full sm:max-w-[42rem]">
+        <div className="flex flex-col items-center">
+          <h1 className="text-2xl font-semibold mb-2 text-black">
+            Welcome Back
+          </h1>
+          <p className="text-gray-600 mb-4">
+            Please enter your login details below
+          </p>
         </div>
-
-        <div className="mb-4 relative">
-          <label
-            htmlFor="password"
-            className="block text-gray-600 font-[400] mb-2"
-          >
-            Password
-          </label>
-          <div className="flex items-center">
+        <form
+          className="border border-2 p-8 rounded-lg w-full"
+          onSubmit={handleSubmit}
+        >
+          {loginSuccess && ( // Render success message if loginSuccess is true
+            <p className="text-green-500 mb-4">Login successful</p>
+          )}
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-gray-600 font-[400] mb-2"
+            >
+              Email Address
+            </label>
             <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              name="password"
-              value="123456"
-              placeholder="Enter your password"
-              className={`border-gray-300 border w-full px-3 py-2 rounded-lg pr-10 focus:outline-none ${formErrors.password || formErrors.loginError
+              type="email"
+              id="email"
+              name="email"
+              // value="Cletusoyinesam@gmail.com"
+              placeholder="Enter your email address"
+              className={`border-gray-300 border w-full px-3 py-2 rounded-lg focus:outline-none ${
+                formErrors.email || formErrors.loginError
                   ? "border-red-500"
                   : "focus:border-blue-500"
-                }`}
+              }`}
             />
+            {formErrors.email && (
+              <small className="text-red-500">Invalid email address</small>
+            )}
+          </div>
+
+          <div className="mb-4 relative">
+            <label
+              htmlFor="password"
+              className="block text-gray-600 font-[400] mb-2"
+            >
+              Password
+            </label>
+            <div className="flex items-center">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                // value="123456"
+                placeholder="Enter your password"
+                className={`border-gray-300 border w-full px-3 py-2 rounded-lg pr-10 focus:outline-none ${
+                  formErrors.password || formErrors.loginError
+                    ? "border-red-500"
+                    : "focus:border-blue-500"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-0 flex items-center pr-3"
+              >
+                {showPassword ? (
+                  <CiUnlock className="h-6 w-6 text-gray-400 cursor-pointer" />
+                ) : (
+                  <CiLock className="h-6 w-6 text-gray-400 cursor-pointer" />
+                )}
+              </button>
+            </div>
+            {formErrors.password && (
+              <small className="text-red-500">Wrong password</small>
+            )}
+          </div>
+
+          {/* Password */}
+          {passwdResetModal && (
+            <PasswordResetModal onClose={handlePasswdReset} />
+          )}
+
+          <div className="mb-4 text-right">
             <button
               type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute right-0 flex items-center pr-3"
+              className="text-[#0F6C96] text-sm font-[400] hover:underline focus:outline-none"
+              onClick={handlePasswdReset}
             >
-              {showPassword ? (
-                <CiUnlock className="h-6 w-6 text-gray-400 cursor-pointer" />
-              ) : (
-                <CiLock className="h-6 w-6 text-gray-400 cursor-pointer" />
-              )}
+              Forgot password?
             </button>
           </div>
-          {formErrors.password && (
-            <small className="text-red-500">Wrong password</small>
-          )}
-        </div>
 
-        {/* Password */}
-        {passwdResetModal && (
-          <PasswordResetModal onClose={handlePasswdReset} />
-        )}
-
-        <div className="mb-4 text-right">
+          {/* Next Button */}
           <button
-            type="button"
-            className="text-[#0F6C96] text-sm font-[400] hover:underline focus:outline-none"
-            onClick={handlePasswdReset}
+            type="submit"
+            className={`flex items-center justify-center bg-[#0f6c96] text-white font-[400] py-2 mt-4 px-4 rounded-lg w-full border-solid border-[1px] hover:bg-white hover:border-[#0F6C96] hover:text-[#0F6C96] ${
+              !isReadyForSubmission() || isLoading
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+            disabled={!isReadyForSubmission() || isLoading}
           >
-            Forgot password?
+            {isLoading ? (
+              <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.003 8.003 0 0112 4V0C6.486 0 2 4.486 2 10h4c0-3.309 2.676-6 6-6v4c-2.206 0-4.149.929-5.572 2.414L6 13.291zM20 12h-4c0-5.514-4.486-10-10-10v4c3.309 0 6 2.691 6 6h4c0-3.309 2.691-6 6-6v4c-5.514 0-10 4.486-10 10h4c0-2.206 1.794-4 4-4v-4c0-4.411-3.589-8-8-8v4c2.206 0 4 1.794 4 4z"
+                ></path>
+              </svg>
+            ) : (
+              "Sign In"
+            )}
           </button>
-        </div>
 
-        {/* Next Button */}
-        <button
-          type="submit"
-          className={`flex items-center justify-center bg-[#0f6c96] text-white font-[400] py-2 mt-4 px-4 rounded-lg w-full border-solid border-[1px] hover:bg-white hover:border-[#0F6C96] hover:text-[#0F6C96] ${!isReadyForSubmission() || isLoading
-              ? "opacity-50 cursor-not-allowed"
-              : ""
-            }`}
-          disabled={!isReadyForSubmission() || isLoading}
-        >
-          {isLoading ? (
-            <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.003 8.003 0 0112 4V0C6.486 0 2 4.486 2 10h4c0-3.309 2.676-6 6-6v4c-2.206 0-4.149.929-5.572 2.414L6 13.291zM20 12h-4c0-5.514-4.486-10-10-10v4c3.309 0 6 2.691 6 6h4c0-3.309 2.691-6 6-6v4c-5.514 0-10 4.486-10 10h4c0-2.206 1.794-4 4-4v-4c0-4.411-3.589-8-8-8v4c2.206 0 4 1.794 4 4z"
-              ></path>
-            </svg>
-          ) : (
-            "Sign In"
-          )}
-        </button>
-
-        {/* Google Sign In Button */}
-        <button
-          className={`flex items-center justify-center bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 py-2 px-4 rounded-lg w-full mt-4 ${isGoogleLoading ? "cursor-not-allowed opacity-70" : ""
-            }`}
-          onClick={handleGoogleSignIn}
-          disabled={isGoogleLoading}
-        >
-          {isGoogleLoading ? (
-            <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.003 8.003 0 0112 4V0C6.486 0 2 4.486 2 10h4c0-3.309 2.676-6 6-6v4c-2.206 0-4.149.929-5.572 2.414L6 13.291zM20 12h-4c0-5.514-4.486-10-10-10v4c3.309 0 6 2.691 6 6h4c0-3.309 2.691-6 6-6v4c-5.514 0-10 4.486-10 10h4c0-2.206 1.794-4 4-4v-4c0-4.411-3.589-8-8-8v4c2.206 0 4 1.794 4 4z"
-              ></path>
-            </svg>
-          ) : (
-            <>
-              <img
-                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                alt="Google Logo"
-                className="h-6 w-6 mr-2"
-              />
-              Sign in with Google
-            </>
-          )}
-        </button>
-
-        {formErrors.loginError && (
-          <small className="text-red-500">Incorrect email or password</small>
-        )}
-        <div className="flex justify-center items-center mb-4">
-          <p className="text-gray-700 mr-2">Don&apos;t have an Account?</p>
+          {/* Google Sign In Button */}
           <button
-            type="button"
-            className="text-[#0F6C96] font-[400] py-2 px-0 rounded-lg"
+            className={`flex items-center justify-center bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 py-2 px-4 rounded-lg w-full mt-4 ${
+              isGoogleLoading ? "cursor-not-allowed opacity-70" : ""
+            }`}
+            onClick={handleGoogleSignIn}
+            disabled={isGoogleLoading}
+          >
+            {isGoogleLoading ? (
+              <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.003 8.003 0 0112 4V0C6.486 0 2 4.486 2 10h4c0-3.309 2.676-6 6-6v4c-2.206 0-4.149.929-5.572 2.414L6 13.291zM20 12h-4c0-5.514-4.486-10-10-10v4c3.309 0 6 2.691 6 6h4c0-3.309 2.691-6 6-6v4c-5.514 0-10 4.486-10 10h4c0-2.206 1.794-4 4-4v-4c0-4.411-3.589-8-8-8v4c2.206 0 4 1.794 4 4z"
+                ></path>
+              </svg>
+            ) : (
+              <>
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  alt="Google Logo"
+                  className="h-6 w-6 mr-2"
+                />
+                Sign in with Google
+              </>
+            )}
+          </button>
+
+          {formErrors.loginError && (
+            <small className="text-red-500">Incorrect email or password</small>
+          )}
+          <div className="flex justify-center items-center mb-4">
+            <p className="text-gray-700 mr-2">Don&apos;t have an Account?</p>
+            <button
+              type="button"
+              className="text-[#0F6C96] font-[400] py-2 px-0 rounded-lg"
+              style={{ borderColor: "#0F6C96" }}
+              onClick={handleLogInClick}
+            >
+              Sign up
+            </button>
+          </div>
+          <button
+            className="border border-transparent hover:border-blue-500 text-[#0F6C96] font-[400] py-2 px-4 rounded-lg hover:bg-[#0F6C96] hover:text-white"
             style={{ borderColor: "#0F6C96" }}
-            onClick={handleLogInClick}
+            onClick={handleHomeClick}
           >
-            Sign up
+            Back to Home
           </button>
-        </div>
-        <button
-          className="border border-transparent hover:border-blue-500 text-[#0F6C96] font-[400] py-2 px-4 rounded-lg hover:bg-[#0F6C96] hover:text-white"
-          style={{ borderColor: "#0F6C96" }}
-          onClick={handleHomeClick}
-        >
-          Back to Home
-        </button>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default Login;

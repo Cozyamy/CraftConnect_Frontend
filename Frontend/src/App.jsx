@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import {
+  Navigate,
   RouterProvider,
   createBrowserRouter,
   useNavigate,
@@ -9,7 +9,6 @@ import SignUp from "./components/authentication/Signup/Signup";
 import Login from "./components/authentication/Login/Login";
 import Morecategory from "./components/CategoryData/Morecategory";
 import {
- 
   useAuth,
 } from "./components/authentication/Authprovider/AuthContext"; // Import useAuth
 import DashboardLayout from "./components/Dashboard/Dashboard";
@@ -31,8 +30,7 @@ const ProtectedRoute = ({ element, path }) => {
 };
 
 export default function App() {
-  const {loading}= useAuth();
-
+  const {loading, userMode}= useAuth();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -56,7 +54,7 @@ export default function App() {
         <ProtectedRoute
           element={
             <DashboardLayout>
-              <DashPage1 />
+             { userMode == 'artisan'?  <DashPage1 /> : <Navigate to="/dashboard/orders" />}
             </DashboardLayout>
           }
         />

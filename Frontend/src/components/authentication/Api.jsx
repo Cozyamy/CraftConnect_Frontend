@@ -1,1 +1,0 @@
-export const apiKey = "https://4b59-197-210-227-21.ngrok-free.app/api/v1/"
