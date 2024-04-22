@@ -14,7 +14,7 @@ import DashboardLayout from "./components/Dashboard/Dashboard";
 import Spinner from "./components/authentication/Spinner/Spinner";
 import DashPage1 from "./components/Dashboard/DashProperties/DashPage1";
 import DashPage3 from "./components/Dashboard/DashProperties/DashPage3";
-import DashPage4 from "./components/Dashboard/DashProperties/DashPage4";
+import DashPage4 from "./components/Dashboard/DashProperties/Dashboard4/DashPage4";
 import DashPage5 from "./components/Dashboard/DashProperties/DashPage5";
 import DashPage6 from "./components/Dashboard/DashProperties/DashPage6";
 

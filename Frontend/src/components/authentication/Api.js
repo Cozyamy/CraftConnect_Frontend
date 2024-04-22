@@ -20,3 +20,19 @@ export const  getUserFromServer = async (token)=>{
   });
 return res;
 }
+
+export const  postService = async (token,formData)=>{
+  const res = await axios.post(`${apiKey}create_service`,formData,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+return res;
+}
+
+
+export const  getCategories = async ()=>{
+  const res = await axios.get(`${apiKey}categories`,{
+  });
+return res;
+}

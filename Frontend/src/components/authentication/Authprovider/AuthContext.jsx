@@ -3,7 +3,7 @@ import { auth, onAuthStateChanged } from "../../firebase/Firebaseconfig"; // Adj
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { getUserFromServer, loginWithServer } from "../Api";
+import { getUserFromServer, loginWithServer, getCategories } from "../Api";
 
 export const AuthContext = createContext();
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoad] = useState(true);
 
-  const [userMode, setUserMode] = useState(Cookies.get("userMode")??"user");
+  const [userMode, setUserMode] = useState(Cookies.get("userMode") ?? "user");
 
   const changeMode = (mode) => {
     if (mode == "artisan" && !serverUser.artisan) return false;
@@ -22,6 +22,19 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const { data } = await getCategories();
+          console.log({ cateData:data });
+        } catch (error) {
+          console.log({ cateError:error });
+        } finally {
+        }
+      
+      fetchData();
+    }
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -35,9 +48,7 @@ export const AuthProvider = ({ children }) => {
       };
       getUser();
     }
-
-  },[token])
-
+  }, [token]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -57,20 +68,29 @@ export const AuthProvider = ({ children }) => {
         setLoad(false);
       }
     });
-  
   }, [token]);
 
   const logOut = async () => {
     Cookies.remove("token");
     Cookies.remove("userMode");
     setToken(null);
-    setUserMode('user');
+    setUserMode("user");
     await signOut(auth);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, logOut, userMode, changeMode, setUser, loading,serverUser,token, setServerUser }}
+      value={{
+        user,
+        logOut,
+        userMode,
+        changeMode,
+        setUser,
+        loading,
+        serverUser,
+        token,
+        setServerUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
