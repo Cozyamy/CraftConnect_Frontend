@@ -22,7 +22,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     first_name: serverUser.first_name?? "",
     last_name: serverUser.last_name?? "",
-    phone_number: "",
+    phone_number: serverUser.phone_number?? "",
+    email: serverUser.email?? "",
   });
 
   // Function to handle form input changes
@@ -135,7 +136,7 @@ const Profile = () => {
                   {/* Email (read-only) */}
                   <div className="form-group">
                     <label>Email</label>
-                    <input type="email" value="user@example.com" readOnly className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none" />
+                    <input type="email"  value={formData.email} readOnly className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none" />
                   </div>
 
                   {/* Submit Button */}
