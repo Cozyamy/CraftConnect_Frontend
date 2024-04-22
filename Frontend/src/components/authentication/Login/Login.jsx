@@ -85,14 +85,6 @@ const Login = () => {
 
       setLoginSuccess(true); // Set login success message to true
       navigate("/dashboard"); // Redirect after successful login
-
-      const token = await userCredential.user.getIdToken();
-       const res = await loginWithServer(token)
-       Cookies.set("token", res.data.access_token);
-       
-      console.log({ res });
-
-      navigate("/dashboard");
     } catch (error) {
       console.error("Error signing in:", error.message);
       if (
@@ -124,17 +116,13 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true); // Start Google sign-in loading spinner
-
     try {
       // Sign in with Google using Firebase
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log(result);
-      const user = await result.user.getIdToken();
-      console.log({ user });
+      await signInWithPopup(auth, googleProvider);
       navigate("/dashboard");
     } catch (error) {
       console.error("Error signing in with Google:", error.message);
-      // Handle error as needed
+
     } finally {
       setIsGoogleLoading(false);
     }

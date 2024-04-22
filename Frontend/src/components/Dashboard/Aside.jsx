@@ -12,29 +12,17 @@ import {
 import PropTypes from "prop-types";
 
 import { AuthContext } from "../authentication/Authprovider/AuthContext";
-import { auth } from "../firebase/Firebaseconfig";
+
 import { useContext } from "react";
 import Profile from "./DashProperties/Profile";
 
 const Aside = ({ visible }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userMode } = useContext(AuthContext);
+  const { userMode,logOut } = useContext(AuthContext);
   const [showProfileModal, setShowProfileModal] = useState(false);
 
 
-  const navHome = () => {
-    navigate("/");
-  };
-
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      navigate("/");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
 
   const buttons = [
     { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard",
@@ -101,7 +89,7 @@ const Aside = ({ visible }) => {
             <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white">
               <button
                 className="flex items-center justify-center gap-2 ml-6"
-                onClick={handleLogout}
+                onClick={logOut}
               >
                 <RiLogoutBoxLine /> Logout
               </button>

@@ -2,7 +2,6 @@ import {
   Navigate,
   RouterProvider,
   createBrowserRouter,
-  useNavigate,
 } from "react-router-dom";
 import { Landing } from "./routes";
 import SignUp from "./components/authentication/Signup/Signup";
@@ -21,10 +20,10 @@ import DashPage6 from "./components/Dashboard/DashProperties/DashPage6";
 
 // Protected Route Component
 const ProtectedRoute = ({ element, path }) => {
-  const navigate = useNavigate();
+
   const { user,loading } = useAuth();
   if (!user  && !loading ) {
-      navigate("login");
+      return <Navigate to="/" />;
   }
   return <>{element}</>;
 };

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoad] = useState(true);
 
-  const [userMode, setUserMode] = useState(Cookies.get("userMode"));
+  const [userMode, setUserMode] = useState(Cookies.get("userMode")??"user");
 
   const changeMode = (mode) => {
     if (mode == "artisan" && !serverUser.artisan) return false;
@@ -46,8 +46,8 @@ export const AuthProvider = ({ children }) => {
         const token = await user.getIdToken();
         try {
           const res = await loginWithServer(token);
-          setToken(res.data.access_token);
           Cookies.set("token", res.data.access_token);
+          setToken(res.data.access_token);
         } catch (error) {
           console.log(error);
         }
@@ -57,38 +57,20 @@ export const AuthProvider = ({ children }) => {
         setLoad(false);
       }
     });
-    // async function newFunction() {
-    // if (token) {
-    //   try {
-    //     const res = await axios.get(
-    //       "https://4199-197-210-226-200.ngrok-free.app/api/v1/user/name",
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       }
-    //     );
-    //     setUser(res.data);
-    //     console.log("User is", res.data);
-    //   } catch (error) {
-    //     console.log("Error", error);
-    //   }
-    //   return;
-    // }
-
-    // setLoad(false);
-    // }
-    // newFunction();
+  
   }, [token]);
 
   const logOut = async () => {
     Cookies.remove("token");
+    Cookies.remove("userMode");
+    setToken(null);
+    setUserMode('user');
     await signOut(auth);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, logOut, userMode, changeMode, setUser, loading,serverUser,token }}
+      value={{ user, logOut, userMode, changeMode, setUser, loading,serverUser,token, setServerUser }}
     >
       {children}
     </AuthContext.Provider>

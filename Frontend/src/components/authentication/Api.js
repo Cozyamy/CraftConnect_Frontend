@@ -13,7 +13,7 @@ export const  loginWithServer = async (token)=>{
 }
 
 export const  getUserFromServer = async (token)=>{
-  const res = await axios.get(`${apiKey}user/name`,{
+  const res = await axios.get(`${apiKey}user/me`,{
     headers: {
       Authorization: `Bearer ${token}`,
     },
