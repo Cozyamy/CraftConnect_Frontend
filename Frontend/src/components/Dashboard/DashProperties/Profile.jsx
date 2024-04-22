@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import UploadPicture from "./Uploadpic";
+import { AuthContext } from "../../authentication/Authprovider/AuthContext";
 
 
 const Profile = () => {
 
   const [profilePicture, setProfilePicture] = useState("");
+  const {serverUser} = useContext(AuthContext);
 
   const handleFileChange = (file) => {
     const reader = new FileReader();
@@ -18,8 +20,8 @@ const Profile = () => {
 
   // State to manage form fields
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    first_name: serverUser.first_name?? "",
+    last_name: serverUser.last_name?? "",
     phone_number: "",
   });
 

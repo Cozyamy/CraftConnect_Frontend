@@ -11,3 +11,12 @@ export const  loginWithServer = async (token)=>{
     });
   return res;
 }
+
+export const  getUserFromServer = async (token)=>{
+  const res = await axios.get(`${apiKey}user/name`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+return res;
+}

@@ -3,22 +3,41 @@ import { auth, onAuthStateChanged } from "../../firebase/Firebaseconfig"; // Adj
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { loginWithServer } from "../Api";
+import { getUserFromServer, loginWithServer } from "../Api";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [serverUser, setServerUser] = useState(null);
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoad] = useState(true);
 
   const [userMode, setUserMode] = useState(Cookies.get("userMode"));
 
   const changeMode = (mode) => {
-    // if (mode == "artisan" && !user.artisan) return;
+    if (mode == "artisan" && !serverUser.artisan) return false;
     setUserMode(mode);
     Cookies.set("userMode", mode);
+    return true;
   };
+
+
+  useEffect(() => {
+    if (token) {
+      const getUser = async () => {
+        try {
+          const res = await getUserFromServer(token);
+          setServerUser(res.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getUser();
+    }
+
+  },[token])
+
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -27,7 +46,8 @@ export const AuthProvider = ({ children }) => {
         const token = await user.getIdToken();
         try {
           const res = await loginWithServer(token);
-          console.log({ res });
+          setToken(res.data.access_token);
+          Cookies.set("token", res.data.access_token);
         } catch (error) {
           console.log(error);
         }
@@ -68,7 +88,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, logOut, userMode, changeMode, setUser, loading }}
+      value={{ user, logOut, userMode, changeMode, setUser, loading,serverUser,token }}
     >
       {children}
     </AuthContext.Provider>

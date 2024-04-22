@@ -88,6 +88,8 @@ const Login = () => {
 
       const token = await userCredential.user.getIdToken();
        const res = await loginWithServer(token)
+       Cookies.set("token", res.data.access_token);
+       
       console.log({ res });
 
       navigate("/dashboard");
