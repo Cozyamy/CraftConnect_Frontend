@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from "react";
-import {AdsList} from "./AdsList"
+import React, { useState } from "react";
+import { AdsList } from "./AdsList";
 import { CreateAdsForm } from "./CreateAds";
 
-
 const DashPage4 = () => {
-
   const [isCreating, setIsCreating] = useState(false);
+  const [ads, setAds] = useState([]);
 
-  if (isCreating) return <CreateAdsForm close={()=>setIsCreating(false)}/>
+  const handleCreateAds = (ad) => {
+    setAds([...ads, ad]);
+    setIsCreating(false);
+  };
+
   return (
-    <AdsList>
-      <button className="btn" onClick={()=>setIsCreating(!isCreating)}> Add new </button>
-    </AdsList>
+    <div>
+      {isCreating ? (
+        <CreateAdsForm close={() => setIsCreating(false)} onCreate={handleCreateAds} />
+      ) : (
+        <AdsList ads={ads}>
+          <button className="btn" onClick={() => setIsCreating(!isCreating)}>Add new</button>
+        </AdsList>
+      )}
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const apiKey = "http://37.27.82.158:7000/api/v1/"
 
@@ -33,6 +34,16 @@ return res;
 
 export const  getCategories = async ()=>{
   const res = await axios.get(`${apiKey}categories`,{
+  });
+return res;
+}
+
+export const getUserServices = async () => {
+  const token = Cookies.get('token')
+  const res = await axios.get(`${apiKey}user/services/`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 return res;
 }
