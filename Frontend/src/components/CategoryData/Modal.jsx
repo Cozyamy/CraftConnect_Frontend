@@ -1,10 +1,9 @@
-// Modal.js
-import React, { useState } from "react";
+import { useState } from "react";
 import BookingFormStep1 from "./BookingFormStep1";
 import BookingFormStep2 from "./BookingFormStep2";
 import CloseButton from "./CloseButton";
 
-const Modal = ({ isOpen, onClose, category }) => {
+const Modal = ({ isOpen, onClose, service }) => {
   const [step, setStep] = useState(1);
   const [bookingDetails, setBookingDetails] = useState({
     name: "",
@@ -37,7 +36,7 @@ const Modal = ({ isOpen, onClose, category }) => {
         <div className="bg-white rounded-lg w-[450px] relative">
           <CloseButton onClose={onClose} />
           {step === 1 && (
-            <BookingFormStep1 category={category} onNext={handleNextStep} />
+            <BookingFormStep1 service={service} onNext={handleNextStep} />
           )}
           {step === 2 && (
             <BookingFormStep2

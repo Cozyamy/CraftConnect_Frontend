@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import UploadPicture from "./Uploadpic";
 import { AuthContext } from "../../authentication/Authprovider/AuthContext";
 
@@ -20,10 +20,10 @@ const Profile = () => {
 
   // State to manage form fields
   const [formData, setFormData] = useState({
-    first_name: serverUser.first_name?? "",
-    last_name: serverUser.last_name?? "",
-    phone_number: serverUser.phone_number?? "",
-    email: serverUser.email?? "",
+    first_name: serverUser?.first_name?? "",
+    last_name: serverUser?.last_name?? "",
+    phone_number: serverUser?.phone_number?? "",
+    email: serverUser?.email?? "",
   });
 
   // Function to handle form input changes
@@ -38,7 +38,6 @@ const Profile = () => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform form submission logic, e.g., update user profile
     console.log(formData);
     // Reset form fields after submission
     setFormData({
@@ -103,7 +102,7 @@ const Profile = () => {
                       type="text"
                       id="first-name"
                       name="first_name"
-                      value={formData.first_name}
+                      value={formData?.first_name??""}
                       onChange={handleInputChange}
                       className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none"
                     />
@@ -115,7 +114,7 @@ const Profile = () => {
                       type="text"
                       id="last-name"
                       name="last_name"
-                      value={formData.last_name}
+                      value={formData?.last_name}
                       onChange={handleInputChange}
                       className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none"
                     />
@@ -128,7 +127,7 @@ const Profile = () => {
                       id="phone-number"
                       name="phone_number"
                       placeholder="+2347011234567"
-                      value={formData.phone_number}
+                      value={formData?.phone_number}
                       onChange={handleInputChange}
                       className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none"
                     />
@@ -136,7 +135,7 @@ const Profile = () => {
                   {/* Email (read-only) */}
                   <div className="form-group">
                     <label>Email</label>
-                    <input type="email"  value={formData.email} readOnly className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none" />
+                    <input type="email"  value={formData?.email} readOnly className="mt-3 border border-gray-300 rounded-md w-full px-3 py-2 outline-none" />
                   </div>
 
                   {/* Submit Button */}

@@ -1,23 +1,33 @@
-// BookingFormStep1.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const BookingFormStep1 = ({ category, onNext }) => {
+const BookingFormStep1 = ({ service, onNext }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
 
+  useEffect(() => {
+    if (service) {
+      setName(service.name);
+      setPrice(service.price);
+      setLocation(service.location); 
+    }
+  }, [service]);
+
   const handleNext = () => {
-    // Validate inputs if needed
     onNext({ name, price, location });
   };
 
   return (
     <div className="p-8 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">{category.name}</h2>
-      <p className="mb-4">{category.description}</p>
-      <div className="w-32 h-24 mb-4">
-          <img src={category.image} alt="" className="w-full h-full rounded-md" />
-        </div>
+      {service && (
+        <>
+          <h2 className="text-2xl font-bold mb-4">{service.name}</h2>
+          <p className="mb-4">{service.description}</p>
+          <div className="w-32 h-24 mb-4">
+            <img src={service.image} alt="" className="w-full h-full rounded-md" />
+          </div>
+        </>
+      )}
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"

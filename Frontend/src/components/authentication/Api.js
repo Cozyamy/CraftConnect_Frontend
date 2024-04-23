@@ -47,3 +47,9 @@ export const getUserServices = async () => {
   });
 return res;
 }
+export const  getServices = async (category)=>{
+  const res = await axios.get(`${apiKey}service`,{
+  });
+
+return res;
+}
