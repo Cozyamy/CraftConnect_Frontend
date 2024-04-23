@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { auth, onAuthStateChanged } from "../../firebase/Firebaseconfig"; // Adjust the path as needed
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
-import axios from "axios";
+// import axios from "axios";
 import { getUserFromServer, loginWithServer, getCategories } from "../Api";
 
 export const AuthContext = createContext();
@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
           console.log({ cateError:error });
         } finally {
+          ""
         }
       
       fetchData();
@@ -55,6 +56,8 @@ export const AuthProvider = ({ children }) => {
       if (user) {
         setUser(user);
         const token = await user.getIdToken();
+        console.log({fbToken:token});
+        setLoad(false);
         try {
           const res = await loginWithServer(token);
           Cookies.set("token", res.data.access_token);
@@ -62,7 +65,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
           console.log(error);
         }
-        setLoad(false);
+    
       } else {
         setUser(null);
         setLoad(false);
