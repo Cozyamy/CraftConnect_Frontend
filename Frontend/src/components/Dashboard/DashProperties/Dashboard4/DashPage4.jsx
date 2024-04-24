@@ -17,7 +17,7 @@ const DashPage4 = () => {
         <CreateAdsForm close={() => setIsCreating(false)} onCreate={handleCreateAds} />
       ) : (
         <AdsList ads={ads}>
-          <button className="btn" onClick={() => setIsCreating(!isCreating)}>Add new</button>
+          <button className="btn bg-[#0F6C96] py-2 px-2 rounded text-white mb-6" onClick={() => setIsCreating(!isCreating)}>Add new</button>
         </AdsList>
       )}
     </div>

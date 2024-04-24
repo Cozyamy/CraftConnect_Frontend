@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IoHomeOutline } from "react-icons/io5";
+import { IoHomeOutline,IoBookOutline, } from "react-icons/io5";
 import { CiBookmark } from "react-icons/ci";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { MdOutlineReviews } from "react-icons/md";
@@ -9,6 +9,8 @@ import {
   RiSettingsLine,
   RiLogoutBoxLine,
 } from "react-icons/ri";
+import { TbSpeakerphone } from "react-icons/tb";
+
 import PropTypes from "prop-types";
 
 import { AuthContext } from "../authentication/Authprovider/AuthContext";
@@ -27,11 +29,11 @@ const Aside = ({ visible }) => {
   const buttons = [
     { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard",
     mode: "artisan" },
-    { icon: IoHomeOutline, label: "Book an Artisan", route: "/category" },
+    { icon: IoBookOutline , label: "Book an Artisan", route: "/category" },
     // { icon: RiUserSearchLine, label: "Browse Artisan", page: "Page2" },
     { icon: RiShoppingCartLine, label: "Order", route: "/dashboard/orders" },
     {
-      icon: RiShoppingCartLine,
+      icon: TbSpeakerphone,
       label: "ads",
       route: "/dashboard/ads",
       mode: "artisan",
