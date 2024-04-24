@@ -1,48 +1,38 @@
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 const BookingFormStep1 = ({ service, onNext }) => {
-  const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [picture_1_url, setpicture_1_url] = useState("");
   const [location, setLocation] = useState("");
+  const [description, setdescription] = useState("");
 
   useEffect(() => {
     if (service) {
-      setName(service.name);
+      setpicture_1_url(service.picture_1_url);
       setPrice(service.price);
-      setLocation(service.location); 
+      setLocation(service.location);
+      setdescription(service.description); 
     }
   }, [service]);
 
   const handleNext = () => {
-    onNext({ name, price, location });
+    onNext({ picture_1_url, description, name, price, location });
   };
 
   return (
     <div className="p-8 rounded-lg">
-      {service && (
-        <>
-          <h2 className="text-2xl font-bold mb-4">{service.name}</h2>
-          <p className="mb-4">{service.description}</p>
-          <div className="w-32 h-24 mb-4">
-            <img src={service.image} alt="" className="w-full h-full rounded-md" />
-          </div>
-        </>
-      )}
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="name"
-        >
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 w-full"
-        />
+
+      <div className="max-w-full rounded-sm mb-2">
+        <div className="h-[200px] rounded-sm">
+        <img src={picture_1_url} className="w-full h-full object-cover rounded-sm" />
+        </div>
       </div>
+
+      <div className="mb-2">
+        <h1 className="block text-gray-700 text-sm font-bold">Description</h1>
+        <p>{description}</p>
+      </div>
+      
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -53,6 +43,7 @@ const BookingFormStep1 = ({ service, onNext }) => {
         <input
           type="text"
           id="price"
+          disabled
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 w-full"
@@ -69,6 +60,7 @@ const BookingFormStep1 = ({ service, onNext }) => {
           type="text"
           id="location"
           value={location}
+          disabled
           onChange={(e) => setLocation(e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 w-full"
         />
@@ -81,6 +73,16 @@ const BookingFormStep1 = ({ service, onNext }) => {
       </button>
     </div>
   );
+};
+
+BookingFormStep1.propTypes = {
+  service: PropTypes.shape({
+    picture_1_url: PropTypes.string,
+    price: PropTypes.number,
+    location: PropTypes.string,
+    description: PropTypes.string
+  }),
+  onNext: PropTypes.func.isRequired
 };
 
 export default BookingFormStep1;

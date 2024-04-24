@@ -3,7 +3,6 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { NavBar, Footer } from "../landing";
 import Modal from "./Modal";
 import { getCategories, getServices } from "../authentication/Api";
-import BookingFormStep1 from "./BookingFormStep1";
 
 const Morecategory = ({
   showHeader = true,
