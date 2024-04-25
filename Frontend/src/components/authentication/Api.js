@@ -22,6 +22,7 @@ export const  getUserFromServer = async (token)=>{
 return res;
 }
 
+
 export const  postService = async (token,formData)=>{
   const res = await axios.post(`${apiKey}create_service`,formData,{
     headers: {
@@ -47,9 +48,39 @@ export const getUserServices = async () => {
   });
 return res;
 }
+
 export const  getServices = async (category)=>{
   const res = await axios.get(`${apiKey}service`,{
   });
 
+return res;
+}
+
+export const getUserOrders = async () => {
+  const token = Cookies.get('token')
+  const res = await axios.get(`${apiKey}user_orders`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+return res;
+}
+
+export const getArtisanOrders = async () => {
+  const token = Cookies.get('token')
+  const res = await axios.get(`${apiKey}user/services/`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+return res;
+}
+export const createBooking = async () => {
+  const token = Cookies.post('token')
+  const res = await axios.get(`${apiKey}create_booking/1`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 return res;
 }
