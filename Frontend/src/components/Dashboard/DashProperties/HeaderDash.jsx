@@ -26,45 +26,46 @@ const Header = ({ toggleAside, asideVisible }) => {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Construct FormData object
     const formData = new FormData();
     formData.append("picture", picture);
     formData.append("address", address);
-
+  
     console.log("Request:", {
       picture,
       address,
       token,
     });
-
-    // Make a POST request to the API endpoint
-    axios
-      .post(`${apiKey}submit_artisan_info`, formData, {
+  
+    try {
+      // Make a POST request to the API endpoint
+      const response = await axios.post(`${apiKey}submit_artisan_info`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           // 'Content-Type': 'multipart/form-data',
         },
-      })
-      .then((response) => {
-        console.log("Response:", response.data);
-        // Switch the mode after successful submission
-        try {
-          const { data } = getUserFromServer(token);
-          setServerUser(data);
-          changeMode(userMode === "user" ? "artisan" : "user");
-        } catch (e) {
-          console.log(e);
-        }
-
-        setShowModal(false); // Close the form submission modal
-        setShowSuccessModal(true); // Show the success modal
-      })
-      .catch((error) => {
-        console.error("Error:", error.response.data);
       });
+  
+      console.log("Response:", response.data);
+  
+      // Switch the mode to "artisan" immediately after successful submission
+      changeMode("artisan");
+  
+      // Update serverUser state if necessary
+      if (!serverUser.artisan) {
+        const userData = await getUserFromServer(token);
+        setServerUser(userData.data);
+      }
+  
+      // Close the form submission modal and show the success modal
+      setShowModal(false);
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
   };
-
+  
   const switcher = () => {
     // Show the modal before switching
     if (userMode == "user" && !serverUser.artisan) return setShowModal(true);

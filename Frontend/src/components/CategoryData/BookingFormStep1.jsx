@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { baseUrl } from "../authentication/Api"
+
+
 const BookingFormStep1 = ({ service, onNext }) => {
   const [price, setPrice] = useState("");
   const [picture_1_url, setpicture_1_url] = useState("");
   const [location, setLocation] = useState("");
   const [description, setdescription] = useState("");
+  
 
   useEffect(() => {
     if (service) {
@@ -24,7 +28,8 @@ const BookingFormStep1 = ({ service, onNext }) => {
 
       <div className="max-w-full rounded-sm mb-2">
         <div className="h-[200px] rounded-sm">
-        <img src={picture_1_url} className="w-full h-full object-cover rounded-sm" />
+        <img src={`${baseUrl}${picture_1_url}`}
+ className="w-full h-full object-cover rounded-sm" />
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { NavBar, Footer } from "../landing";
 import Modal from "./Modal";
 import { getCategories, getServices } from "../authentication/Api";
+import { apiKey } from "../authentication/Api";
 
 const Morecategory = ({
   showHeader = true,
@@ -198,19 +199,22 @@ const Morecategory = ({
           </div>
         </div>
         <div className="container mx-auto my-8">
-        <div className="flex items-center justify-center flex-wrap gap-6">
+          <div className="flex items-center justify-center flex-wrap gap-6">
             {services.map((service) => (
               <div
                 key={service.id}
-                className="w-[350px] h-[350px] bg-gray-200 p-4 rounded-lg relative"
+                className="w-[350px] bg-gray-200 relative"
                 onMouseEnter={() => setSelectedService(service)}
                 onMouseLeave={() => setSelectedService(null)}
               >
+                {/* {console.log(service)} */}
+
                 {service.picture_1_url && (
                   <img
-                    src={service.picture_1_url}
+                    // src={`${apiKey}/${service.picture_1_url}`}
+                    src={`http://37.27.82.158:7000${service.picture_1_url}`}
                     alt={"img"}
-                    className="w-full h-auto"
+                    className="w-full h-full rounded-lg object-cover"
                   />
                 )}
                 {selectedService === service && (

@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 export const apiKey = "http://37.27.82.158:7000/api/v1/"
 
+export const baseUrl =  "http://37.27.82.158:7000"
 
 export const  loginWithServer = async (token)=>{
     const res = await axios.post(`${apiKey}login`, null, {
