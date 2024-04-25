@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
       if (user) {
         setUser(user);
         const token = await user.getIdToken();
-        console.log({fbToken:token});
+        // console.log({fbToken:token});
         setLoad(false);
         try {
           const res = await loginWithServer(token);

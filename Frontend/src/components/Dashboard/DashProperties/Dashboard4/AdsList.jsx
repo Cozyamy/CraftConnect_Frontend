@@ -1,11 +1,11 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { IoTrashBinOutline } from "react-icons/io5";
 import { TiPencil } from "react-icons/ti";
-import {getUserServices} from "../../../authentication/Api"
-
+import { getUserServices } from "../../../authentication/Api";
+import { baseUrl } from "../../../authentication/Api";
 
 export const AdsList = ({ children }) => {
-  const [useraAds, setUserAds] = useState([])
+  const [useraAds, setUserAds] = useState([]);
 
   useEffect(() => {
     const fetchUserServices = async () => {
@@ -15,11 +15,10 @@ export const AdsList = ({ children }) => {
       } catch (err) {
         console.log(err);
       }
-    }
+    };
 
     fetchUserServices();
-  }, [])
-
+  }, []);
 
   return (
     <div className="container mx-auto py-8 px-5 rounded-3xl bg-white">
@@ -32,7 +31,8 @@ export const AdsList = ({ children }) => {
           {useraAds?.map((ad) => (
             <div key={ad?.id} className="bg-[#E2EDF2] p-4 rounded-2xl">
               <img
-                src={ad?.picture_1_url}
+                // src={ad?.picture_1_url}
+                src={`${baseUrl}${ad?.picture_1_url}`}
                 alt="Ad Preview"
                 className="w-full h-40 object-cover mb-2 rounded"
               />
@@ -60,7 +60,7 @@ export const AdsList = ({ children }) => {
         {useraAds.map((userServiceAdd) => {
           <div key={userServiceAdd.id}>
             <img src={userServiceAdd.picture_1_url} alt="" />
-          </div>
+          </div>;
         })}
       </div>
     </div>

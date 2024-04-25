@@ -151,6 +151,7 @@ export const CreateAdsForm = ({ close }) => {
                   {newAd.picture_1_url ? (
                     <img
                       src={newAd.picture_1_url}
+                      // src={`http://37.27.82.158:7000${newAd.picture_1_url}`}
                       alt="Ad Preview"
                       className="w-full h-full object-cover rounded"
                     />

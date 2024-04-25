@@ -5,15 +5,16 @@ import CloseButton from "./CloseButton";
 
 const Modal = ({ isOpen, onClose, service }) => {
   const [step, setStep] = useState(1);
-  const [bookingDetails, setBookingDetails] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     phoneNumber: "",
     workDetail: "",
   });
+  
 
   const handleNextStep = (details) => {
-    setBookingDetails(details);
+    setFormData(details);
     setStep(step + 1);
   };
 
@@ -21,11 +22,29 @@ const Modal = ({ isOpen, onClose, service }) => {
     setStep(step - 1);
   };
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Booking details:", bookingDetails);
-    // Close modal after submission
-    onClose();
+  const handleSubmit = async () => {
+    try {
+      // Send formData to an endpoint
+      const response = await fetch("your_endpoint_url", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("Form data submitted successfully:", formData);
+        onClose(); // Close modal after successful submission
+      } else {
+        console.error("Error submitting form data:", response.statusText);
+        // Handle error scenario
+      }
+    } catch (error) {
+      console.error("Error submitting form data:", error.message);
+      // Handle error scenario
+    }
+    onClose()
   };
 
   if (!isOpen) return null;
@@ -40,10 +59,13 @@ const Modal = ({ isOpen, onClose, service }) => {
           )}
           {step === 2 && (
             <BookingFormStep2
-              bookingDetails={bookingDetails}
-              onSubmit={handleSubmit}
-              onPrevious={handlePreviousStep}
-            />
+            formData={formData}
+            onSubmit={handleSubmit}
+            onPrevious={handlePreviousStep}
+            onInputChange={(field, value) =>
+              setFormData({ ...formData, [field]: value })
+            }
+          />
           )}
         </div>
       </div>
