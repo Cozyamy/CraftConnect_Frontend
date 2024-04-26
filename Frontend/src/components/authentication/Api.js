@@ -78,6 +78,7 @@ export const getArtisanOrders = async () => {
 return res;
 }
 
+
 export const createBooking = async (formData) => {
   const token = Cookies.get('token')
   const res = await axios.post(`${apiKey}create_booking/1`, formData,{
