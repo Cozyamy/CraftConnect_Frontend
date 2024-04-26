@@ -5,7 +5,7 @@ import { CreateAdsForm } from "./CreateAds";
 const DashPage4 = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [ads, setAds] = useState([]);
-
+  
   const handleCreateAds = (ad) => {
     setAds([...ads, ad]);
     setIsCreating(false);

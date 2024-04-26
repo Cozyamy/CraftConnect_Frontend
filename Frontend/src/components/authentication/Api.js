@@ -86,3 +86,14 @@ export const createBooking = async () => {
   });
 return res;
 }
+
+
+export const deleteService = async () => {
+  const token = Cookies.post('token')
+  const res = await axios.delete(`${apiKey}create_booking/1`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+return res;
+}

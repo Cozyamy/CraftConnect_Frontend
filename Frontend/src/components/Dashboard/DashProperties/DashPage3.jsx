@@ -35,7 +35,7 @@ const DashPage3 = ({ isArtisan }) => {
       // You need to update the status in the backend here
       // For simplicity, let's assume you have a function to update the status
       // For example:
-      // await updateOrderStatus(updatedOrders[index].id, newStatus);
+      await updateOrderStatus(updatedOrders[index].id, newStatus);
     } catch (error) {
       setError(error);
     }
