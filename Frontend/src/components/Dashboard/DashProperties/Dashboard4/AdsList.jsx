@@ -13,7 +13,7 @@ export const AdsList = ({ children }) => {
         const res = await getUserServices();
         setUserAds(res.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 

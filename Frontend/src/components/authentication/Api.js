@@ -57,6 +57,7 @@ export const  getServices = async (category)=>{
 return res;
 }
 
+
 export const getUserOrders = async () => {
   const token = Cookies.get('token')
   const res = await axios.get(`${apiKey}user_orders`,{
@@ -77,9 +78,10 @@ export const getArtisanOrders = async () => {
 return res;
 }
 
-export const createBooking = async () => {
-  const token = Cookies.post('token')
-  const res = await axios.get(`${apiKey}create_booking/1`,{
+
+export const createBooking = async (formData) => {
+  const token = Cookies.get('token')
+  const res = await axios.post(`${apiKey}create_booking/1`, formData,{
     headers: {
       Authorization: `Bearer ${token}`,
     },

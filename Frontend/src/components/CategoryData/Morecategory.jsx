@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { NavBar, Footer } from "../landing";
 import Modal from "./Modal";
 import { getCategories, getServices } from "../authentication/Api";
-import { apiKey } from "../authentication/Api";
+import PropTypes from "prop-types"; 
+// import { apiKey } from "../authentication/Api";
 
 const Morecategory = ({
   showHeader = true,
@@ -40,7 +41,7 @@ const Morecategory = ({
         console.log({ services: response.data });
         setServices(response.data);
       } catch (error) {
-        console.error("Error fetching services:", error);
+        // console.error("Error fetching services:", error);
       }
     };
     fetchServices();
@@ -245,6 +246,20 @@ const Morecategory = ({
       />
     </>
   );
+};
+
+// Define PropTypes for the component
+Morecategory.propTypes = {
+  showHeader: PropTypes.bool,
+  showSearch: PropTypes.bool,
+  showFooter: PropTypes.bool,
+};
+
+// Set default props
+Morecategory.defaultProps = {
+  showHeader: true,
+  showSearch: true,
+  showFooter: true,
 };
 
 export default Morecategory;
