@@ -27,7 +27,7 @@ const BookingFormStep2 = ({ formData, onSubmit, onInputChange, onPrevious }) => 
   const createBooking = async (formData) => {
     try {
       const token = Cookies.get('token');
-      const res = await axios.post(`${apiKey}create_booking/1`, formData, { 
+      const res = await axios.post(`${apiKey}create_booking/2`, formData, { 
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data' // Set content type to multipart/form-data
