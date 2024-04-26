@@ -85,6 +85,7 @@ const Login = () => {
 
       setLoginSuccess(true); // Set login success message to true
       navigate("/dashboard"); // Redirect after successful login
+      
     } catch (error) {
       console.error("Error signing in:", error.message);
       if (
@@ -122,7 +123,6 @@ const Login = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Error signing in with Google:", error.message);
-
     } finally {
       setIsGoogleLoading(false);
     }
@@ -161,7 +161,6 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
-              // value="Cletusoyinesam@gmail.com"
               placeholder="Enter your email address"
               className={`border-gray-300 border w-full px-3 py-2 rounded-lg focus:outline-none ${
                 formErrors.email || formErrors.loginError
@@ -177,7 +176,8 @@ const Login = () => {
           <div className="mb-4 relative">
             <label
               htmlFor="password"
-              className="block text-gray-600 font-[400] mb-2"
+              className="block text-gray-600 font-[400] mb-2 bg-transparentfirebase
+              fire"
             >
               Password
             </label>

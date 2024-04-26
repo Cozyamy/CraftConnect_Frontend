@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { IoTrashBinOutline } from "react-icons/io5";
-import { TiPencil } from "react-icons/ti";
+// import { IoTrashBinOutline } from "react-icons/io5";
+// import { TiPencil } from "react-icons/ti";
 import { getUserServices } from "../../../authentication/Api";
 import { baseUrl } from "../../../authentication/Api";
 
@@ -13,7 +13,7 @@ export const AdsList = ({ children }) => {
         const res = await getUserServices();
         setUserAds(res.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 

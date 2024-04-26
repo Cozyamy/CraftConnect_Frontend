@@ -20,7 +20,7 @@ const BookingFormStep1 = ({ service, onNext }) => {
   }, [service]);
 
   const handleNext = () => {
-    onNext({ picture_1_url, description, name, price, location });
+    onNext({});
   };
 
   return (

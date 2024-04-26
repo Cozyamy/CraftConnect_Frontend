@@ -2,6 +2,7 @@ import { useState } from "react";
 import BookingFormStep1 from "./BookingFormStep1";
 import BookingFormStep2 from "./BookingFormStep2";
 import CloseButton from "./CloseButton";
+import { createBooking } from "../authentication/Api";
 
 const Modal = ({ isOpen, onClose, service }) => {
   const [step, setStep] = useState(1);
@@ -11,7 +12,6 @@ const Modal = ({ isOpen, onClose, service }) => {
     phoneNumber: "",
     workDetail: "",
   });
-  
 
   const handleNextStep = (details) => {
     setFormData(details);
@@ -24,17 +24,14 @@ const Modal = ({ isOpen, onClose, service }) => {
 
   const handleSubmit = async () => {
     try {
-      // Send formData to an endpoint
-      const response = await fetch("your_endpoint_url", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const { name, email, phoneNumber, workDetail } = formData; // Extract relevant data
+      const dataToSend = { name, email, phone_number: phoneNumber, workdetails: workDetail }; // Prepare data for submission
 
-      if (response.ok) {
-        console.log("Form data submitted successfully:", formData);
+      // Send formData to the createBooking endpoint
+      const response = await createBooking(dataToSend);
+
+      if (response.status === 200) {
+        console.log("Form data submitted successfully:", dataToSend);
         onClose(); // Close modal after successful submission
       } else {
         console.error("Error submitting form data:", response.statusText);
@@ -44,7 +41,7 @@ const Modal = ({ isOpen, onClose, service }) => {
       console.error("Error submitting form data:", error.message);
       // Handle error scenario
     }
-    onClose()
+    onClose(); // Close modal after submission
   };
 
   if (!isOpen) return null;
@@ -59,13 +56,13 @@ const Modal = ({ isOpen, onClose, service }) => {
           )}
           {step === 2 && (
             <BookingFormStep2
-            formData={formData}
-            onSubmit={handleSubmit}
-            onPrevious={handlePreviousStep}
-            onInputChange={(field, value) =>
-              setFormData({ ...formData, [field]: value })
-            }
-          />
+              formData={formData}
+              onSubmit={handleSubmit}
+              onPrevious={handlePreviousStep}
+              onInputChange={(field, value) =>
+                setFormData({ ...formData, [field]: value })
+              }
+            />
           )}
         </div>
       </div>
