@@ -1,45 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { getUserOrders, getArtisanOrders } from "../../authentication/Api";
 import { HiOutlineSelector } from 'react-icons/hi';
 
 const DashPage3 = ({ isArtisan }) => {
-  // Sample orders data
-  const initialOrders = [
-    { category: 'Plumber', date: '2024-03-25', status: 'Completed' },
-    { category: 'Mechanic', date: '2024-03-28', status: 'Completed' },
-    { category: 'Barber', date: '2024-04-07', status: 'Completed' },
-    { category: 'Gardener', date: '2024-04-07', status: 'Pending' },
-    { category: 'Carpenter', date: '2024-04-08', status: 'Completed' },
-    { category: 'Chef', date: '2024-04-10', status: 'Completed' },
-    { category: 'Cleaner', date: '2024-04-12', status: 'Pending' },
-    { category: 'HairDresser', date: '2024-04-14', status: 'Completed' },
-    { category: 'Mason', date: '2024-04-15', status: 'Pending' },
-    { category: 'Photographer', date: '2024-04-16', status: 'Pending' },
-    { category: 'Painter', date: '2024-04-16', status: 'Pending' },
-    { category: 'Roofer', date: '2024-04-17', status: 'Pending' },
-  ];
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // State to hold orders
-  const [orders, setOrders] = useState(initialOrders);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response;
+        if (isArtisan) {
+          response = await getArtisanOrders();
+        } else {
+          response = await getUserOrders();
+        }
+        setOrders(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [isArtisan]);
 
-  // Function to handle status change
-  const handleStatusChange = (index, newStatus) => {
-    setOrders(prevOrders => {
-      const updatedOrders = [...prevOrders];
+  const handleStatusChange = async (index, newStatus) => {
+    try {
+      const updatedOrders = [...orders];
       updatedOrders[index].status = newStatus;
-      return updatedOrders;
-    });
+      setOrders(updatedOrders);
+      // You need to update the status in the backend here
+      // For simplicity, let's assume you have a function to update the status
+      // For example:
+      // await updateOrderStatus(updatedOrders[index].id, newStatus);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   return (
     <div className='mx-4'>
       <h1 className='text-3xl font-bold'>Most Recent Orders</h1>
-      <div className="w-full overflow-hidden rounded-xl shadow-lg shadow-[#0F6C96] mt-8">
-        <div className="w-full overflow-x-auto">
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error.message}</p>
+      ) : orders.length === 0 ? (
+        <p className = 'text-3xl mt-10 text-[#0F6C96]'
+        >No Orders</p>
+      ) : (
+        <div className="overflow-x-auto">
           <table className="w-full bg-white">
             <thead>
               <tr className="text-gray-600 uppercase text-sm leading-normal">
                 <th className="py-3 px-6 text-left">S/N</th>
-                <th className="py-3 px-6 text-left">Category</th>
+                <th className="py-3 px-6 text-left">Name</th>
+                <th className="py-3 px-6 text-left">Phone</th>
+                <th className="py-3 px-6 text-left">Service</th>
                 <th className="py-3 px-6 text-left">Date</th>
                 <th className="py-3 px-6 text-left">Status</th>
               </tr>
@@ -48,8 +68,10 @@ const DashPage3 = ({ isArtisan }) => {
               {orders.map((order, index) => (
                 <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
                   <td className="py-3 px-6 text-left">{index + 1}</td>
-                  <td className="py-3 px-5 text-left">{order.category}</td>
-                  <td className="py-3 text-left">{order.date}</td>
+                  <td className="py-3 px-6 text-left">{order.name}</td>
+                  <td className="py-3 px-6 text-left">{order.phone}</td>
+                  <td className="py-3 px-6 text-left">{order.category}</td>
+                  <td className="py-3 px-6 text-left">{order.date}</td>
                   <td className="py-3 px-6 text-left">
                     {isArtisan ? (
                       <select
@@ -89,7 +111,7 @@ const DashPage3 = ({ isArtisan }) => {
             </tbody>
           </table>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -31,6 +31,7 @@ export const CreateAdsForm = ({ close }) => {
     };
     fetchData();
   }, []);
+ 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewAd({ ...newAd, [name]: value });
@@ -76,6 +77,26 @@ export const CreateAdsForm = ({ close }) => {
       console.error("Error creating ad:", error);
     }
   };
+  //     const token = Cookies.get("token");
+  //     try {
+  //       const response = await postService(token, formData);
+  //     } catch (error) {
+  //       setError("Failed to create from api");
+  //     }
+  //     setNewAd({
+  //       category: "",
+  //       location: "",
+  //       description: "",
+  //       price: "",
+  //       picture: "",
+  //     });
+  //     setError(null);
+  //     close();
+  //   } catch (error) {
+  //     setError("Failed to create ad");
+  //     console.error("Error creating ad:", error);
+  //   }
+  // };
 
   return (
     <div className="container mx-auto py-8 px-5 rounded-3xl bg-white">

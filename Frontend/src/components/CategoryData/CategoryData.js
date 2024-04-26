@@ -11,7 +11,7 @@ const categoryData = [
     description: "Experienced in creating and altering garments according to customer specifications.",
   },
   {
-    image: "barbar.jpg",
+    image: "barber.jpg",
     name: "Barbar",
     description: "Proficient in male hair cutting, styling, and dying.",
   },

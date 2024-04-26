@@ -25,7 +25,6 @@ const Aside = ({ visible }) => {
   const [showProfileModal, setShowProfileModal] = useState(false);
 
 
-
   const buttons = [
     { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard",
     mode: "artisan" },
