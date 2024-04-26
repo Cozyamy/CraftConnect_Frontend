@@ -7,6 +7,7 @@ import { AuthContext } from "../../authentication/Authprovider/AuthContext";
 import UploadPicture from "./Uploadpic";
 import { apiKey, getUserFromServer } from "../../authentication/Api";
 
+
 const Header = ({ toggleAside, asideVisible }) => {
   const { user, changeMode, userMode, token, setServerUser, serverUser } =
     useContext(AuthContext);

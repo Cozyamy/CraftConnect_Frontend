@@ -69,7 +69,7 @@ return res;
 
 export const getArtisanOrders = async () => {
   const token = Cookies.get('token')
-  const res = await axios.get(`${apiKey}user/services/`,{
+  const res = await axios.get(`${apiKey}artisan_orders`,{
     headers: {
       Authorization: `Bearer ${token}`,
     },
