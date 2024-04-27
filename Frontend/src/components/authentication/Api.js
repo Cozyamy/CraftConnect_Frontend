@@ -99,3 +99,56 @@ export const deleteService = async () => {
   });
 return res;
 }
+
+
+export const registerInServer = async (token, first_name, last_name, phone_number) => {
+        const res = await axios.post(
+          `${apiKey}register`,
+          {
+            first_name: first_name,
+            last_name: last_name,
+            phone_number: phone_number,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+return res;
+}
+
+
+      // Get ID token
+      // const token = await credential.user.getIdToken();
+      // console.log(token);
+      // // Email verification
+      // await sendEmailVerification(credential.user);
+
+      // // Checking if email is verified
+      // if (!credential.user.emailVerified) {
+      //   setErrorMessage("Please verify your email address before logging in.");
+      //   setIsLoading(false);
+      //   // return;
+      // }
+
+      // try {
+      //   // Send token to serve
+      //   const res = await axios.post(
+      //     `${apiKey}register`,
+      //     {
+      //       first_name: first_name,
+      //       last_name: last_name,
+      //       phone_number: phone_number,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${token}`,
+      //       },
+      //     }
+      //   );
+
+      //   console.log(res.data);
+      // } catch (error) {
+      //   console.log("Error sending token to server:", error.message);
+      // }

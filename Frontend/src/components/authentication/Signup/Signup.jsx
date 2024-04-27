@@ -1,31 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiLock, CiUnlock } from "react-icons/ci";
 import {
   auth,
   createUserWithEmailAndPassword,
   signInWithPopup,
-  sendEmailVerification,
   googleProvider,
-  signOut,
-  updateProfile,
+
 } from "../../firebase/Firebaseconfig.js";
-import { useAuth } from "../Authprovider/AuthContext";
-import axios from "axios";
-import { apiKey } from "../Api.js";
+import Cookies from "js-cookie";
+import { AuthContext } from "../Authprovider/AuthContext";
+
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
-
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone_number: "",
-    password: "",
-  });
-
+  const { formData, setFormData } = useContext(AuthContext);;
+ 
   const [formErrors, setFormErrors] = useState({
     first_name: false,
     last_name: false,
@@ -61,6 +51,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
 
     // Validate form fields before submission
     const isFormValid = Object.values(formErrors).every((error) => !error);
@@ -74,52 +65,21 @@ const SignUp = () => {
 
     try {
       const { email, password, first_name, last_name, phone_number } = formData;
+      Cookies.set('first_name',first_name)
+      Cookies.set('last_name',last_name)
+      Cookies.set('phone_number',phone_number)
+  
       // Create user
-      const credential = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      await updateProfile(credential.user,{ displayName: first_name + " " + last_name });
-
-      // Get ID token
-      const token = await credential.user.getIdToken();
-      console.log(token);
-      // Email verification
-      await sendEmailVerification(credential.user);
-
-      // Checking if email is verified
-      if (!credential.user.emailVerified) {
-        setErrorMessage("Please verify your email address before logging in.");
-        setIsLoading(false);
-        // return;
-      }
-
-      try {
-        // Send token to server
-        const res = await axios.post(
-          `${apiKey}register`,
-          {
-            first_name: first_name,
-            last_name: last_name,
-            phone_number: phone_number,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        console.log(res.data);
-      } catch (error) {
-        console.log("Error sending token to server:", error.message);
-      }
-
-      await signOut(auth);
-      // navigate("/login"); // Redirect to the login page after successful signup
-      window.location.href = '/login'
+      navigate("/login", { replace: true })
+     
+// Redirect to the login page after successful signup
+      // window.location.href = '/login'
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage(
@@ -157,13 +117,11 @@ const SignUp = () => {
 
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        console.log("Email is already in use. Please use a different email.");
-      } else {
-        console.log("Error signing up with Google:", error.message);
-      }
+    
+        console.log("Error signing up with Google:", error?.message);
+      
     } finally {
       setIsGoogleLoading(false);
     }
