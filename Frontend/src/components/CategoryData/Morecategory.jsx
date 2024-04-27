@@ -4,6 +4,7 @@ import { NavBar, Footer } from "../landing";
 import Modal from "./Modal";
 import { getCategories, getServices } from "../authentication/Api";
 import PropTypes from "prop-types"; 
+import { Service } from "./Service";
 // import { apiKey } from "../authentication/Api";
 
 const Morecategory = ({
@@ -18,14 +19,15 @@ const Morecategory = ({
   const [startIndex, setStartIndex] = useState(0);
   const [visibleCategories, setVisibleCategories] = useState(10);
   const [activeIndex, setActiveIndex] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
+
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await getCategories();
         setCategories(response.data.categories);
+      console.log("Fetching categories...:", response.data.categories);
+
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -40,6 +42,7 @@ const Morecategory = ({
         const response = await getServices(selectedCategory?.name);
         console.log({ services: response.data });
         setServices(response.data);
+      console.log("Fetching skills...:", response.data);
       } catch (error) {
         // console.error("Error fetching services:", error);
       }
@@ -113,14 +116,7 @@ const Morecategory = ({
     setActiveIndex(null);
   };
 
-  const openModal = (service) => {
-    setSelectedService(service);
-    setIsModalOpen(true);
-  };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <>
@@ -201,49 +197,14 @@ const Morecategory = ({
         </div>
         <div className="container mx-auto my-8">
           <div className="flex items-center justify-center flex-wrap gap-6">
-            {services.map((service) => (
-              <div
-                key={service.id}
-                className="w-[350px] bg-gray-200 relative"
-                onMouseEnter={() => setSelectedService(service)}
-                onMouseLeave={() => setSelectedService(null)}
-              >
-                {/* {console.log(service)} */}
-
-                {service.picture_1_url && (
-                  <img
-                    // src={`${apiKey}/${service.picture_1_url}`}
-                    src={`http://37.27.82.158:7000${service.picture_1_url}`}
-                    alt={"img"}
-                    className="w-full h-full rounded-lg object-cover"
-                  />
-                )}
-                {selectedService === service && (
-                  <div className="flex flex-col items-center justify-center  cursor-pointer absolute top-0 left-0 bg-black bg-opacity-60 w-full h-full opacity-0 transition-opacity duration-300 hover:opacity-100 rounded-lg p-4 text-center ">
-                    <p className="text-white sm-max:text-[14px]">
-                      {service.description}
-                    </p>
-                    <button
-                      type="button"
-                      className="bg-[#1287BB] p-2 rounded text-white mt-[1.5rem] hover:opacity-80"
-                      onClick={() => openModal(service)}
-                    >
-                      Book Now
-                    </button>
-                  </div>
-                )}
-                <p>{service.category_name}</p>
-              </div>
-            ))}
+            {services.map((service) => 
+             <Service key={service.id} service={service}/>
+            )}
           </div>
         </div>
         {showFooter && <Footer />}
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        service={selectedService}
-      />
+    
     </>
   );
 };

@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiKey } from "../authentication/Api";
 import Cookies from "js-cookie";
+import { FcCheckmark } from "react-icons/fc";
 
-const BookingFormStep2 = ({ formData, onSubmit, onInputChange, onPrevious }) => {
+const BookingFormStep2 = ({ formData, onSubmit, onInputChange, onPrevious,service }) => {
   const { first_name, last_name, email, phone_number, workdetails } = formData;
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -25,9 +26,10 @@ const BookingFormStep2 = ({ formData, onSubmit, onInputChange, onPrevious }) => 
   };
 
   const createBooking = async (formData) => {
+    console.log(formData);
     try {
       const token = Cookies.get('token');
-      const res = await axios.post(`${apiKey}create_booking/1`, formData, { 
+      const res = await axios.post(`${apiKey}create_booking/${service.id}`, formData, { 
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data' // Set content type to multipart/form-data
@@ -61,8 +63,10 @@ const BookingFormStep2 = ({ formData, onSubmit, onInputChange, onPrevious }) => 
 
   const SuccessModal = () => (
     <div className="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-md shadow-lg">
+      <div className="flex items-center justify-center gap-2">
       <p>Congratulations for booking a service!</p>
-      <img src="green-checkmark.png" alt="Green Checkmark" className="mt-4" />
+      <FcCheckmark />
+      </div>
     </div>
   );
 

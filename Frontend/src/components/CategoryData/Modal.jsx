@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BookingFormStep1 from "./BookingFormStep1";
 import BookingFormStep2 from "./BookingFormStep2";
 import CloseButton from "./CloseButton";
 import { createBooking } from "../authentication/Api";
 
 const Modal = ({ isOpen, onClose, service }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -25,14 +27,23 @@ const Modal = ({ isOpen, onClose, service }) => {
   const handleSubmit = async () => {
     try {
       const { name, email, phoneNumber, workDetail } = formData; // Extract relevant data
-      const dataToSend = { name, email, phone_number: phoneNumber, workdetails: workDetail }; // Prepare data for submission
+      const dataToSend = {
+        name,
+        email,
+        phone_number: phoneNumber,
+        workdetails: workDetail,
+      }; // Prepare data for submission
 
       // Send formData to the createBooking endpoint
       const response = await createBooking(dataToSend);
 
+      console.log({ response });
+
       if (response.status === 200) {
         console.log("Form data submitted successfully:", dataToSend);
-        onClose(); // Close modal after successful submission
+        onClose(() => {
+          navigate("/dashboard");
+        }); // Close modal after successful submission
       } else {
         console.error("Error submitting form data:", response.statusText);
         // Handle error scenario
@@ -50,6 +61,7 @@ const Modal = ({ isOpen, onClose, service }) => {
     <div className="fixed z-[1000] top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
         <div className="bg-white rounded-lg w-[450px] relative">
+          {/* <p>{JSON.stringify(service.id)}</p> */}
           <CloseButton onClose={onClose} />
           {step === 1 && (
             <BookingFormStep1 service={service} onNext={handleNextStep} />
@@ -59,6 +71,7 @@ const Modal = ({ isOpen, onClose, service }) => {
               formData={formData}
               onSubmit={handleSubmit}
               onPrevious={handlePreviousStep}
+              service={service}
               onInputChange={(field, value) =>
                 setFormData({ ...formData, [field]: value })
               }
