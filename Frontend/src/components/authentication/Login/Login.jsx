@@ -99,7 +99,7 @@ const Login = () => {
           password: false,
           loginError: true,
         });
-        setErrorMessage("Incorrect email or password.");
+        setErrorMessage("Please verify your email address before logging in");
       } else {
         // Other errors
         setFormErrors({

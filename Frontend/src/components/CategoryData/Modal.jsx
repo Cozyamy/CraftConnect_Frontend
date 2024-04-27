@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import BookingFormStep1 from "./BookingFormStep1";
 import BookingFormStep2 from "./BookingFormStep2";
 import CloseButton from "./CloseButton";
 import { createBooking } from "../authentication/Api";
 
 const Modal = ({ isOpen, onClose, service }) => {
-  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -27,23 +25,14 @@ const Modal = ({ isOpen, onClose, service }) => {
   const handleSubmit = async () => {
     try {
       const { name, email, phoneNumber, workDetail } = formData; // Extract relevant data
-      const dataToSend = {
-        name,
-        email,
-        phone_number: phoneNumber,
-        workdetails: workDetail,
-      }; // Prepare data for submission
+      const dataToSend = { name, email, phone_number: phoneNumber, workdetails: workDetail }; // Prepare data for submission
 
       // Send formData to the createBooking endpoint
       const response = await createBooking(dataToSend);
 
-      console.log({ response });
-
       if (response.status === 200) {
         console.log("Form data submitted successfully:", dataToSend);
-        onClose(() => {
-          navigate("/dashboard");
-        }); // Close modal after successful submission
+        onClose(); // Close modal after successful submission
       } else {
         console.error("Error submitting form data:", response.statusText);
         // Handle error scenario

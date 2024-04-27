@@ -81,7 +81,7 @@ return res;
 
 export const createBooking = async (formData) => {
   const token = Cookies.get('token')
-  const res = await axios.post(`${apiKey}create_booking/2`, formData,{
+  const res = await axios.post(`${apiKey}create_booking/${service.id}`, formData,{
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -7,7 +7,6 @@ import { AuthContext } from "../../authentication/Authprovider/AuthContext";
 import UploadPicture from "./Uploadpic";
 import { apiKey, getUserFromServer } from "../../authentication/Api";
 
-
 const Header = ({ toggleAside, asideVisible }) => {
   const { user, changeMode, userMode, token, setServerUser, serverUser } =
     useContext(AuthContext);
@@ -32,33 +31,37 @@ const Header = ({ toggleAside, asideVisible }) => {
     const formData = new FormData();
     formData.append("picture", picture);
     formData.append("address", address);
-  
+
     console.log("Request:", {
       picture,
       address,
       token,
     });
-  
+
     try {
       // Make a POST request to the API endpoint
-      const response = await axios.post(`${apiKey}submit_artisan_info`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          // 'Content-Type': 'multipart/form-data',
-        },
-      });
-  
+      const response = await axios.post(
+        `${apiKey}submit_artisan_info`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // 'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
       console.log("Response:", response.data);
-  
+
       // Switch the mode to "artisan" immediately after successful submission
       changeMode("artisan");
-  
+
       // Update serverUser state if necessary
       if (!serverUser.artisan) {
         const userData = await getUserFromServer(token);
         setServerUser(userData.data);
       }
-  
+
       // Close the form submission modal and show the success modal
       setShowModal(false);
       setShowSuccessModal(true);
@@ -66,7 +69,7 @@ const Header = ({ toggleAside, asideVisible }) => {
       console.error("Error:", error.response.data);
     }
   };
-  
+
   const switcher = () => {
     // Show the modal before switching
     if (userMode == "user" && !serverUser.artisan) return setShowModal(true);
@@ -264,7 +267,7 @@ const Header = ({ toggleAside, asideVisible }) => {
                   </div>
                 </div>
                 <h2 className="text-lg leading-6 font-medium text-gray-900 text-center mb-4">
-                  Artisan Role Switched Successfully
+                  Artisan KYC updated successfully
                 </h2>
               </div>
             </div>
