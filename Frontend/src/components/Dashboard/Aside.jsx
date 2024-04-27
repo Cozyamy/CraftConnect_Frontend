@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IoHomeOutline,IoBookOutline, } from "react-icons/io5";
+import { IoHomeOutline, IoBookOutline } from "react-icons/io5";
 import { CiBookmark } from "react-icons/ci";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { MdOutlineReviews } from "react-icons/md";
@@ -21,14 +21,21 @@ import Profile from "./DashProperties/Profile";
 const Aside = ({ visible }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userMode,logOut } = useContext(AuthContext);
+  const { userMode, logOut, serverUser } = useContext(AuthContext);
   const [showProfileModal, setShowProfileModal] = useState(false);
 
+  console.log({ serverUser });
+
+  // if (serverUser.p)
 
   const buttons = [
-    { icon: IoHomeOutline, label: "Dashboard", route: "/dashboard",
-    mode: "artisan" },
-    { icon: IoBookOutline , label: "Book an Artisan", route: "/category" },
+    {
+      icon: IoHomeOutline,
+      label: "Dashboard",
+      route: "/dashboard",
+      mode: "artisan",
+    },
+    { icon: IoBookOutline, label: "Book an Artisan", route: "/category" },
     // { icon: RiUserSearchLine, label: "Browse Artisan", page: "Page2" },
     { icon: RiShoppingCartLine, label: "Order", route: "/dashboard/orders" },
     {
@@ -57,8 +64,11 @@ const Aside = ({ visible }) => {
       }`}
     >
       <div className="mt-[1rem]">
-        <div className="w-[150px] h-auto cursor-pointer mt-[1rem]" onClick={()=> navigate("/") } >
-        <img src="/logo.png" alt="" className="w-full h-full" />
+        <div
+          className="w-[150px] h-auto cursor-pointer mt-[1rem]"
+          onClick={() => navigate("/")}
+        >
+          <img src="/logo.png" alt="" className="w-full h-full" />
         </div>
         <ul className="relative flex flex-col gap-6 mt-[5rem]">
           {buttons.map((button, index) => {
@@ -82,7 +92,10 @@ const Aside = ({ visible }) => {
           })}
 
           <div className="absolute bottom-[-15rem] right-0 left-0 flex flex-col gap-6">
-            <div className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white" onClick={toggleProfileModal}>
+            <div
+              className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white"
+              onClick={toggleProfileModal}
+            >
               <button className="flex items-center justify-center gap-2 ml-6">
                 <RiSettingsLine /> Settings
               </button>
@@ -99,9 +112,9 @@ const Aside = ({ visible }) => {
         </ul>
       </div>
 
-      {showProfileModal && <Profile setShowProfileModal={setShowProfileModal} />
-    }
-
+      {showProfileModal && (
+        <Profile setShowProfileModal={setShowProfileModal} />
+      )}
     </aside>
   );
 };

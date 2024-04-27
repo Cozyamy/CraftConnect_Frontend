@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import { IoTrashBinOutline } from "react-icons/io5";
-// import { TiPencil } from "react-icons/ti";
+import { MdDelete  } from "react-icons/md";
+import { TiPencil } from "react-icons/ti";
 import { getUserServices } from "../../../authentication/Api";
 import { baseUrl } from "../../../authentication/Api";
 
@@ -41,18 +41,18 @@ export const AdsList = ({ children }) => {
               <p className="text-sm text-gray-600 mb-4">{ad.description}</p>
               <p className="text-sm text-gray-600 mb-4">Price: ₦{ad.price}</p>
               <div className="flex justify-between">
-                {/* <button
+                 <button
                   onClick={() => handleEditClick(ad)}
                   className="text-blue-500 hover:text-blue-600 focus:outline-none"
                 >
                   <TiPencil className="mr-1" /> Edit
-                </button> */}
-                {/* <button
+                </button>
+                 <button
                   onClick={() => handleDeleteClick(ad.id)}
                   className="text-red-500 hover:text-red-600 focus:outline-none"
                 >
-                  <IoTrashBinOutline className="mr-1" /> Delete
-                </button> */}
+                  <MdDelete  className="mr-1" /> Delete
+                </button> 
               </div>
             </div>
           ))}

@@ -81,10 +81,74 @@ return res;
 
 export const createBooking = async (formData) => {
   const token = Cookies.get('token')
-  const res = await axios.post(`${apiKey}create_booking/1`, formData,{
+  const res = await axios.post(`${apiKey}create_booking/2`, formData,{
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 return res;
 }
+
+
+export const deleteService = async () => {
+  const token = Cookies.post('token')
+  const res = await axios.delete(`${apiKey}create_booking/1`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+return res;
+}
+
+
+export const registerInServer = async (token, first_name, last_name, phone_number) => {
+        const res = await axios.post(
+          `${apiKey}register`,
+          {
+            first_name: first_name,
+            last_name: last_name,
+            phone_number: phone_number,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+return res;
+}
+
+
+      // Get ID token
+      // const token = await credential.user.getIdToken();
+      // console.log(token);
+      // // Email verification
+      // await sendEmailVerification(credential.user);
+
+      // // Checking if email is verified
+      // if (!credential.user.emailVerified) {
+      //   setErrorMessage("Please verify your email address before logging in.");
+      //   setIsLoading(false);
+      //   // return;
+      // }
+
+      // try {
+      //   // Send token to serve
+      //   const res = await axios.post(
+      //     `${apiKey}register`,
+      //     {
+      //       first_name: first_name,
+      //       last_name: last_name,
+      //       phone_number: phone_number,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${token}`,
+      //       },
+      //     }
+      //   );
+
+      //   console.log(res.data);
+      // } catch (error) {
+      //   console.log("Error sending token to server:", error.message);
+      // }
