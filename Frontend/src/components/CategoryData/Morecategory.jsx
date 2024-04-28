@@ -124,8 +124,8 @@ const Morecategory = ({
         {showHeader && <NavBar showLinks={false} showLogoutButton={true} />}
         <div className="pt-20 mb-8">
           {showSearch && (
-            <div className="fixed top-[85px] left-0 right-0 z-10 bg-white">
-              <div className="container mx-auto py-4 px-6">
+            <div className="fixed top-[85px] left-0 right-0 z-10 bg-white sm-max:top-[66px]">
+              <div className="container mx-auto py-4 px-6  sm-max:px-2">
                 <div className="flex items-center justify-between">
                   <div>
                     <input

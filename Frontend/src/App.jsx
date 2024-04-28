@@ -43,9 +43,13 @@ export default function App() {
       path: "login",
       element: <Login />,
     },
+    // {
+    //   path: "/category",
+    //   element: <ProtectedRoute element={<Morecategory />} />,
+    // },
     {
       path: "/category",
-      element: <ProtectedRoute element={<Morecategory />} />, // Wrap protected component with ProtectedRoute
+      element:<Morecategory />, // Wrap protected component with ProtectedRoute
     },
     {
       path: "/dashboard",

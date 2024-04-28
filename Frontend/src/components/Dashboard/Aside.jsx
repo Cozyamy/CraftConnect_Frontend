@@ -10,14 +10,11 @@ import {
   RiLogoutBoxLine,
 } from "react-icons/ri";
 import { TbSpeakerphone } from "react-icons/tb";
-
 import PropTypes from "prop-types";
-
 import { AuthContext } from "../authentication/Authprovider/AuthContext";
-
 import { useContext } from "react";
 import Profile from "./DashProperties/Profile";
-
+import "./Aside.css";
 const Aside = ({ visible }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,8 +32,11 @@ const Aside = ({ visible }) => {
       route: "/dashboard",
       mode: "artisan",
     },
-    { icon: IoBookOutline, label: "Book an Artisan", route: "/category" },
-    // { icon: RiUserSearchLine, label: "Browse Artisan", page: "Page2" },
+    { icon: IoBookOutline,
+      label: "Book an Artisan", 
+      route: "/category",
+      mode: "user"},
+      
     { icon: RiShoppingCartLine, label: "Order", route: "/dashboard/orders" },
     {
       icon: TbSpeakerphone,
@@ -44,7 +44,6 @@ const Aside = ({ visible }) => {
       route: "/dashboard/ads",
       mode: "artisan",
     },
-    // { icon: RiAdvertisementLine, label: "Post Ads", page: "Page4", route:'/dashboard/post-ads' },
     {
       icon: MdOutlinePriceChange,
       label: "Pricing",
@@ -59,18 +58,18 @@ const Aside = ({ visible }) => {
 
   return (
     <aside
-      className={`bg-white w-[20rem] p-4 flex flex-col gap-16 ${
+      className={`Aside bg-white w-[20rem] p-4 flex flex-col gap-16 md-max:absolute md-max:top-0 md-max:h-full md-max:w-[15rem] md-max:z-10 ${
         visible ? "block" : "hidden"
       }`}
     >
       <div className="mt-[1rem]">
         <div
-          className="w-[150px] h-auto cursor-pointer mt-[1rem]"
+          className="w-[150px] h-auto cursor-pointer mt-[1rem] sm-max:w-[100px]"
           onClick={() => navigate("/")}
         >
           <img src="/logo.png" alt="" className="w-full h-full" />
         </div>
-        <ul className="relative flex flex-col gap-6 mt-[5rem]">
+        <ul className="relative flex flex-col gap-6 mt-[5rem] sm-max:text-[12px] sm-max:mt-[2rem] sm-max:gap-3 sm-max:mr-[3rem]">
           {buttons.map((button, index) => {
             return (
               (button.mode != "artisan" || userMode == "artisan") && (
@@ -91,7 +90,7 @@ const Aside = ({ visible }) => {
             );
           })}
 
-          <div className="absolute bottom-[-15rem] right-0 left-0 flex flex-col gap-6">
+          <div className="absolute bottom-[-15rem] right-0 left-0 flex flex-col gap-6 sm-max:bottom-[-18rem]">
             <div
               className="flex items-center justify-start gap-2 cursor-pointer p-2 rounded hover:bg-[#1287BB] hover:text-white"
               onClick={toggleProfileModal}

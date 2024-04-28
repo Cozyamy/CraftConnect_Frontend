@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { CgProfile } from "react-icons/cg";
 
 const UploadPicture = ({ onFileChange }) => {
   const fileInputRef = useRef(null);
@@ -35,15 +36,22 @@ const UploadPicture = ({ onFileChange }) => {
   return (
     <>
       <div
-        className="w-12 h-12 rounded-full cursor-pointer border-1"
+        className="relative w-12 h-12 rounded-full cursor-pointer border-1"
         onClick={handleProfilePictureClick}
+        style={{ overflow: "hidden" }}
       >
-        <img
-          src={profilePicture}
-          alt=""
-          className="w-full h-full rounded-full"
-        />
-
+        {profilePicture ? (
+          <img
+            src={profilePicture}
+            alt="Profile Picture"
+            className="w-full h-full rounded-full"
+            style={{ objectFit: "cover" }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-full">
+            <CgProfile className="text-gray-600 w-full h-full" />
+          </div>
+        )}
         <input
           type="file"
           ref={fileInputRef}
@@ -54,6 +62,6 @@ const UploadPicture = ({ onFileChange }) => {
       </div>
     </>
   );
-};
-
+  
+};  
 export default UploadPicture;

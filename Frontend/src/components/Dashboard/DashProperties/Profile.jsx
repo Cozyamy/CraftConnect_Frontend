@@ -62,8 +62,8 @@ const Profile = () => {
   return (
     <>
       {/* Button to open the modal */}
-      <div className="relative bg-white w-[10rem] h-16 rounded-md flex  items-center justify-center">
-      <button onClick={openModal} className="text-[#0f6c96] hover:underline">
+      <div className="relative bg-white w-[10rem] h-16 rounded-md flex  items-center justify-center sm">
+      <button onClick={openModal} className="text-[#0f6c96] hover:underline ">
         Update Profile
       </button>    
       </div>

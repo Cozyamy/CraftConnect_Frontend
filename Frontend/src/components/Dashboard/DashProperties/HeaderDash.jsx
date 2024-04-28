@@ -89,23 +89,27 @@ const Header = ({ toggleAside, asideVisible }) => {
   };
 
   return (
-    <header className="p-12 flex items-center justify-between bg-[#e2edf2] border-b-4">
-      <h1 className="text-2xl">
+    <header className="p-12 flex items-center justify-between bg-[#e2edf2] border-b-4 sm-max:p-6">
+      <h1 className="lg:block text-2xl sm-max:hidden">
         Welcome {user && user.displayName ? user.displayName : "Guest"}
+      </h1>
+      <h1 className="lg:hidden md:hidden text-[12px]">
+        Welcome{" "}
+        {user && user.displayName ? user.displayName.split(" ")[0] : "Guest"}
       </h1>
 
       <div className="flex items-center justify-center gap-4">
         <button
-          className="px-2 py-3 bg-[#0f6c96] rounded-md text-white border-2 hover:border-[#0F6C96] hover:text-[#0F6C96] hover:bg-transparent"
+          className="px-2 py-2 bg-[#0f6c96] rounded-md text-white border-2 hover:border-[#0F6C96] hover:text-[#0F6C96] hover:bg-transparent sm-max:text-[10px]"
           onClick={switcher}
         >
           {userMode === "user" ? "Switch to Artisan" : "Switch to User "}
         </button>
 
-        <UploadPicture onFileChange={handleFileChange} />
+        <UploadPicture onFileChange={handleFileChange}/>
 
         <button
-          className="text-3xl lg:hidden md:hidden sm-max:block"
+          className="text-3xl lg:hidden md-max:block sm-max:block"
           onClick={toggleAside}
         >
           {asideVisible ? <LiaTimesSolid /> : <HiBars4 />}

@@ -119,7 +119,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
                 onClick={function () {
                   navigate("/dashboard");
                 }}
-                className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
+                className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB] sm-max:p-[7px] sm-max:text-[12px]"
               >
                 Dashboard
               </button>
@@ -127,7 +127,7 @@ export function NavBar({ showLinks = true, showLogoutButton = false }) {
             {user && showLogoutButton && (
               <button
                 onClick={() => setShowLogoutConfirmation(true)}
-                className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]"
+                className="border:solid border-2 border-[#1287BB] text-white bg-[#1287BB] rounded-lg p-3 font-medium hover:bg-transparent hover:text-[#1287BB]  sm-max:p-[7px] sm-max:text-[12px]"
               >
                 {user.displayName ? user.displayName.split(' ')[0] : "Logout"}
               </button>
