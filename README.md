@@ -13,37 +13,57 @@ CraftConnect is a platform that connects artisans with customers, providing a ma
 ## Tech Stack
 
 - **Frontend**: React.js
-- **Authentication**: firebase
+- **Backend**: FastAPI (Python)
+- **Database**: PostgreSQL or SQLite
+- **Authentication**: JWT or OAuth
+- **Deployment**: AWS, Azure, firebase
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js and npm installed for frontend development
+- Node.js and npm installed for frontend development.
+- Python and poetry installed for backend development.
+- PostgreSQL or SQLite installed and running.
 
 ### Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Cozyamy/CraftConnect_Frontend.git
+git clone https://github.com/Cozyamy/CraftConnect.git
 cd CraftConnect
 ```
 
 2. Install frontend dependencies:
 
 ```bash
+cd Frontend
 npm install
 ```
 
-### Running the Applicationorn main:app --reload
+3. Install backend dependencies:
+
+```bash
+cd ../Backend
+poetry shell
+poetry install
 ```
 
-Start the frontend development server:
+### Running the Application
+
+1. Start the backend server:
+
+```bash
+cd Backend
+uvicorn main:app --reload
+```
+
+2. Start the frontend development server:
 
 ```bash
 cd ../Frontend
 npm run dev
 ```
 
-3. Access the application in your browser at `http://localhost:5000`.
+3. Access the application in your browser at `http://localhost:3000`.
