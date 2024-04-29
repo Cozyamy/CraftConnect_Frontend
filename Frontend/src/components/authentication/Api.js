@@ -1,9 +1,17 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export const apiKey = "http://37.27.82.158:7000/api/v1/"
+// export const apiKey = "http://37.27.82.158:7000/api/v1/"
 
-export const baseUrl =  "http://37.27.82.158:7000"
+// export const baseUrl =  "http://37.27.82.158:7000"
+
+// export const apiKey = "http://127.0.0.1:8000/api/v1/"
+
+// export const baseUrl =  "http://127.0.0.1:8000:7000"
+
+export const apiKey = "https://api.craftconnet.com.ng/api/v1/"
+
+export const baseUrl =  "https://api.craftconnet.com.ng"
 
 export const  loginWithServer = async (token)=>{
     const res = await axios.post(`${apiKey}login`, null, {

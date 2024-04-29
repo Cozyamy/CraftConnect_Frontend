@@ -18,6 +18,7 @@ export const AdsList = ({ children }) => {
     };
 
     fetchUserServices();
+    console.log(useraAds, "userAds"); 
   }, []);
 
   return (
