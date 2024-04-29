@@ -26,12 +26,12 @@ const Aside = ({ visible }) => {
   // if (serverUser.p)
 
   const buttons = [
-    {
-      icon: IoHomeOutline,
-      label: "Dashboard",
-      route: "/dashboard",
-      mode: "artisan",
-    },
+    // {
+    //   icon: IoHomeOutline,
+    //   label: "Dashboard",
+    //   route: "/dashboard",
+    //   mode: "artisan",
+    // },
     { icon: IoBookOutline,
       label: "Book an Artisan", 
       route: "/category",
