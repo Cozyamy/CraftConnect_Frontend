@@ -9,7 +9,7 @@ import {
 
 } from "../../firebase/Firebaseconfig.js";
 import Cookies from "js-cookie";
-import { AuthContext } from "../Authprovider/AuthContext";
+import { AuthContext } from "../Authprovider/AuthContext.jsx";
 
 
 const SignUp = () => {
